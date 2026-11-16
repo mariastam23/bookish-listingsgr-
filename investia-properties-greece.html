@@ -1,0 +1,816 @@
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+#inv-props{--ink:#111c26;--gold:#a8864f;--gold-d:#8a6c3b;--paper:#fbfaf7;--card:#fff;--line:#e4dfd3;--mute:#6b7682;
+font-family:Manrope,system-ui,sans-serif;color:var(--ink);background:var(--paper);padding:72px 24px 80px;box-sizing:border-box;line-height:1.6;-webkit-font-smoothing:antialiased}
+#inv-props *{box-sizing:border-box}
+#inv-props .wrap{max-width:1240px;margin:0 auto}
+#inv-props .eyebrow{font-size:.72rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-d);font-weight:600;margin:0 0 14px}
+#inv-props h2,#inv-props h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;line-height:1.08;margin:0;letter-spacing:-.005em}
+#inv-props h2{font-size:clamp(40px,6vw,68px)}
+#inv-props h3{font-size:2rem}
+#inv-props .rule{width:56px;height:1px;background:var(--gold);margin:22px 0}
+#inv-props .lead{color:var(--mute);max-width:64ch;margin:0;font-size:1.02rem}
+#inv-props .top{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:44px}
+#inv-props .ctl{display:flex;gap:22px;align-items:center}
+#inv-props .lang button{font:inherit;font-size:.78rem;letter-spacing:.16em;font-weight:600;border:0;background:none;color:var(--mute);cursor:pointer;padding:4px 2px;border-bottom:1px solid transparent}
+#inv-props .lang button[aria-pressed=true]{color:var(--ink);border-bottom-color:var(--gold)}
+#inv-props .lang span{color:var(--line)}
+#inv-props .btn{font:inherit;font-size:.76rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;padding:14px 26px;border:1px solid var(--ink);background:var(--ink);color:#fff;text-decoration:none;cursor:pointer;display:inline-block;transition:background .25s,border-color .25s,color .25s}
+#inv-props .btn:hover{background:var(--gold-d);border-color:var(--gold-d)}
+#inv-props .btn.alt{background:transparent;color:var(--ink)}
+#inv-props .btn.alt:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+#inv-props .btn.sm{padding:9px 16px;font-size:.7rem}
+#inv-props .banner{border-left:2px solid var(--gold);background:#fff;padding:12px 18px;margin:0 0 22px;font-size:.95rem}
+#inv-props .banner[hidden]{display:none}
+#inv-props .card.sold .ph{filter:grayscale(.85);opacity:.8}
+#inv-props .tabs{display:flex;gap:30px;overflow-x:auto;border-bottom:1px solid var(--line);margin-bottom:28px;scrollbar-width:none}
+#inv-props .tabs::-webkit-scrollbar{display:none}
+#inv-props button.tab{font:inherit;font-size:.82rem;letter-spacing:.06em;font-weight:500;padding:14px 0;border:0;border-bottom:2px solid transparent;background:none;color:var(--mute);cursor:pointer;white-space:nowrap;margin-bottom:-1px}
+#inv-props button.tab:hover{color:var(--ink)}
+#inv-props button.tab[aria-pressed=true]{color:var(--ink);border-bottom-color:var(--gold)}
+#inv-props button.tab sup{font-size:.68em;margin-left:4px;color:var(--gold-d)}
+#inv-props .bar{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr auto;gap:16px;align-items:end}
+#inv-props .adv{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-top:20px;padding:22px;background:var(--card);border:1px solid var(--line)}
+#inv-props .adv[hidden]{display:none}
+#inv-props label.f{display:flex;flex-direction:column;gap:4px;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+#inv-props select,#inv-props input[type=search],#inv-props input[type=number],#inv-props input[type=text],#inv-props input[type=email],#inv-props input[type=tel],#inv-props textarea{font:inherit;font-size:1rem;letter-spacing:0;text-transform:none;padding:9px 0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;color:var(--ink);width:100%;outline:none;transition:border-color .2s}
+#inv-props .adv select,#inv-props .adv input,#inv-props .panel input,#inv-props .panel select,#inv-props .panel textarea,#inv-props dialog input,#inv-props dialog select,#inv-props dialog textarea{background:#fff;padding:10px 12px;border:1px solid var(--line)}
+#inv-props select:focus,#inv-props input:focus,#inv-props textarea:focus{border-color:var(--gold)}
+#inv-props .more{font:inherit;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;background:none;border:0;border-bottom:1px solid var(--ink);color:var(--ink);cursor:pointer;padding:8px 0;white-space:nowrap}
+#inv-props .feats{display:flex;flex-wrap:wrap;gap:10px 22px;grid-column:1/-1}
+#inv-props .sh{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin:0}
+#inv-props .landf{grid-column:1/-1;border-top:1px solid var(--line);padding-top:18px;display:flex;flex-direction:column;gap:16px}
+#inv-props .landf[hidden]{display:none}
+#inv-props .landgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px}
+#inv-props .landf .feats{margin:0}
+#inv-props .vids{display:flex;gap:8px;padding:0 10px 12px;flex-wrap:wrap}
+#inv-props .m-img iframe,#inv-props .m-img video{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+#inv-props .plot{margin:6px 0;border:1px solid var(--line);background:#fff;padding:10px}
+#inv-props .plot svg{display:block;width:100%;height:auto;max-height:260px}
+#inv-props .feats .sh{width:100%;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+#inv-props .chk{display:flex;gap:9px;align-items:flex-start;font-size:.92rem;cursor:pointer;letter-spacing:0;text-transform:none;color:var(--ink)}
+#inv-props .chk input{width:auto;margin-top:5px;accent-color:var(--gold-d)}
+#inv-props .row2{display:flex;align-items:center;gap:16px;flex-wrap:wrap;padding:22px 0 26px}
+#inv-props .count{color:var(--mute);font-size:.88rem}
+#inv-props .reset{margin-left:auto;font:inherit;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;background:none;border:0;border-bottom:1px solid var(--mute);color:var(--mute);cursor:pointer;padding:0 0 2px}
+#inv-props .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:44px 32px}
+#inv-props .card{position:relative;display:flex;flex-direction:column;animation:ipin .6s both}
+#inv-props .open{all:unset;cursor:pointer;display:flex;flex-direction:column;flex:1;color:var(--ink);font-family:inherit}
+#inv-props .open:focus-visible{outline:2px solid var(--gold);outline-offset:4px}
+#inv-props .ph{position:relative;overflow:hidden;aspect-ratio:4/3;background:linear-gradient(135deg,#d5dbdd,#e9e5db)}
+#inv-props .ph .pi,#inv-props .m-img{background-size:cover;background-position:center}
+#inv-props .ph .pi{position:absolute;inset:0;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+#inv-props .card:hover .pi{transform:scale(1.045)}
+#inv-props .noimg::after{content:"INVéSTIA";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;letter-spacing:.34em;font-size:1.15rem;color:rgba(17,28,38,.28)}
+#inv-props .badge{position:absolute;top:14px;left:14px;background:rgba(255,255,255,.94);color:var(--ink);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;padding:5px 10px}
+#inv-props .badge.gv{left:auto;right:62px;background:var(--gold);color:#fff}
+#inv-props .badge.om{top:auto;bottom:14px;background:var(--ink);color:#fff}
+#inv-props .badge.dl{top:auto;bottom:14px;left:auto;right:14px;background:#fff;color:var(--gold-d)}
+#inv-props .price small{display:block;font-family:Manrope,sans-serif;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600}
+#inv-props .price .pl+.pl{font-size:1.1rem;margin-top:8px}
+#inv-props .price .pm{display:block;font-family:Manrope,system-ui,sans-serif;font-size:.74rem;color:var(--mute);font-weight:500;letter-spacing:0;margin-top:2px}
+#inv-props .save{position:absolute;top:8px;right:10px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.94);color:var(--ink);font-size:1.15rem;cursor:pointer;line-height:1;transition:background .2s,color .2s}
+#inv-props .save:hover{background:var(--ink);color:#fff}
+#inv-props .save[aria-pressed=true]{background:var(--gold);color:#fff}
+#inv-props .body{padding:20px 0 0;display:flex;flex-direction:column;gap:7px;flex:1}
+#inv-props .loc{color:var(--gold-d);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;font-weight:600}
+#inv-props .ttl{font-family:'Cormorant Garamond',Georgia,serif;font-size:1.7rem;font-weight:500;line-height:1.18}
+#inv-props .meta{color:var(--mute);font-size:.88rem}
+#inv-props .price{margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:500;color:var(--gold-d)}
+#inv-props .empty{padding:56px 0;color:var(--mute);grid-column:1/-1}
+#inv-props .tools{margin-top:96px;padding-top:56px;border-top:1px solid var(--line)}
+#inv-props .tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:32px;margin-top:32px}
+#inv-props .panel{background:var(--card);border:1px solid var(--line);padding:36px}
+#inv-props .panel p.s{color:var(--mute);font-size:.94rem;margin:12px 0 24px}
+#inv-props .fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:14px}
+#inv-props .out{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:22px 0;padding-top:22px;border-top:1px solid var(--line)}
+#inv-props .out small{display:block;color:var(--mute);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
+#inv-props .out b{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:500;color:var(--gold-d)}
+#inv-props .note{color:var(--mute);font-size:.8rem}
+#inv-props .cta{margin-top:96px;background:var(--ink);color:#fff;padding:64px 40px;text-align:center}
+#inv-props .cta h3{color:#fff;font-size:clamp(30px,4vw,44px)}
+#inv-props .cta p{color:rgba(255,255,255,.72);max-width:60ch;margin:18px auto 28px}
+#inv-props .cta .eyebrow{color:#c9ad7c}
+#inv-props .cta .btn{background:var(--gold);border-color:var(--gold);margin:6px}
+#inv-props .cta .btn:hover{background:#fff;color:var(--ink);border-color:#fff}
+#inv-props .cta .btn.alt{background:transparent;border-color:rgba(255,255,255,.5);color:#fff}
+#inv-props .cta .btn.alt:hover{background:#fff;color:var(--ink)}
+#inv-props .legal{color:var(--mute);font-size:.76rem;margin-top:28px;text-align:center}
+#inv-props dialog{border:0;padding:0;max-width:1080px;width:calc(100% - 32px);background:var(--paper);color:var(--ink);max-height:92vh;overflow:auto}
+#inv-props dialog::backdrop{background:rgba(17,28,38,.72);backdrop-filter:blur(3px)}
+#inv-props dialog.narrow{max-width:680px}
+#inv-props .mod{display:grid;grid-template-columns:1.1fr 1fr;position:relative}
+#inv-props .mod .x{position:absolute;top:12px;right:14px;z-index:3;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.95);font-size:1.5rem;line-height:1;cursor:pointer;color:var(--ink)}
+#inv-props .mg{background:#e9e5db}
+#inv-props .m-img{position:relative;aspect-ratio:4/3;background-color:#d5dbdd}
+#inv-props .thumbs{display:flex;gap:8px;padding:10px;overflow-x:auto}
+#inv-props .thumbs button{width:76px;height:56px;border:1px solid var(--line);background:#cfd8dc center/cover;cursor:pointer;padding:0;flex:none;opacity:.8}
+#inv-props .thumbs button:hover{opacity:1;border-color:var(--gold)}
+#inv-props .mi{padding:44px 40px 40px}
+#inv-props .mi h3{font-size:2.3rem;margin:6px 0 14px}
+#inv-props .m-body{padding:40px 40px 36px}
+#inv-props .specs{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin:22px 0;border-top:1px solid var(--line)}
+#inv-props .specs div{padding:12px 0;border-bottom:1px solid var(--line)}
+#inv-props .specs small{display:block;color:var(--mute);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase}
+#inv-props .tags{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+#inv-props .tags span{border:1px solid var(--line);padding:4px 12px;font-size:.78rem;letter-spacing:.03em;background:#fff}
+#inv-props .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+#inv-props .map{margin:18px 0 6px;border:1px solid var(--line);background:#e9e5db}
+#inv-props .map iframe{display:block;width:100%;height:260px;border:0}
+#inv-props .gate{border-left:2px solid var(--gold);background:#fff;padding:14px 18px;margin:18px 0;font-size:.9rem;color:var(--ink)}
+#inv-props .msg{margin-top:14px;font-weight:500;color:var(--gold-d)}
+#inv-props .hp{position:absolute;left:-9999px}
+#inv-props .cmp{overflow-x:auto;margin:18px 0}
+#inv-props table{border-collapse:collapse;width:100%;font-size:.92rem}
+#inv-props th,#inv-props td{border-bottom:1px solid var(--line);padding:11px 14px;text-align:left;vertical-align:top;min-width:150px}
+#inv-props th:first-child{color:var(--mute);font-weight:500;min-width:110px;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase}
+#inv-props :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+@keyframes ipin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){#inv-props .card{animation:none}#inv-props .pi{transition:none}}
+@media(max-width:900px){#inv-props .bar{grid-template-columns:1fr 1fr}#inv-props .bar .f:first-child{grid-column:1/-1}#inv-props .mod{grid-template-columns:1fr}#inv-props .mi{padding:28px 24px}}
+@media(max-width:560px){#inv-props{padding:48px 16px 56px}#inv-props .panel{padding:24px 18px}#inv-props .grid{grid-template-columns:1fr}#inv-props .cta{padding:44px 20px}#inv-props .m-body{padding:28px 20px}}
+@media print{
+ body *{visibility:hidden}
+ #inv-props #ip-short,#inv-props #ip-short *{visibility:visible}
+ #inv-props #ip-short{position:absolute;left:0;top:0;width:100%;max-height:none;overflow:visible}
+ #inv-props .actions,#inv-props .noprint{display:none}
+}
+</style>
+
+<section id="inv-props">
+ <div class="wrap">
+  <div class="top">
+   <div>
+    <p class="eyebrow">INVéSTIA Properties · Exclusive Real Estate</p>
+    <h2 id="ip-h"></h2>
+    <div class="rule"></div>
+    <p class="lead" id="ip-lead"></p>
+   </div>
+   <div class="ctl">
+    <div class="lang" id="ip-langs" role="group" aria-label="Language"></div>
+    <div class="lang" role="group" aria-label="Units"><button data-u="m">m²</button> <span>|</span> <button data-u="us">sq ft</button></div>
+    <button class="btn alt sm" id="ip-shortbtn"></button>
+   </div>
+  </div>
+  <div class="banner" id="ip-banner" hidden></div>
+  <div class="tabs" id="ip-tabs"></div>
+  <div class="bar">
+   <label class="f"><span data-t="search"></span><input type="search" id="ip-q"></label>
+   <label class="f"><span data-t="region"></span><select id="ip-region"></select></label>
+   <label class="f"><span data-t="deal"></span><select id="ip-deal"></select></label>
+   <label class="f"><span data-t="status"></span><select id="ip-status"></select></label>
+   <label class="f"><span data-t="sort"></span><select id="ip-sort"></select></label>
+   <button class="more" id="ip-more" aria-expanded="false"></button>
+  </div>
+  <div class="adv" id="ip-adv" hidden>
+   <label class="f"><span data-t="minPrice"></span><select id="ip-pmin"></select></label>
+   <label class="f"><span data-t="maxPrice"></span><select id="ip-pmax"></select></label>
+   <label class="f"><span data-t="minArea"></span><input type="number" id="ip-amin" min="0" step="10"></label>
+   <label class="f"><span data-t="minRooms"></span><select id="ip-rooms"></select></label>
+   <label class="f"><span data-t="setting"></span><select id="ip-setting"></select></label>
+   <label class="f"><span data-t="seaRel"></span><select id="ip-sea"></select></label>
+   <label class="f" id="ip-gvw"><span data-t="gv"></span><select id="ip-gv"></select></label>
+   <div class="feats" id="ip-styles"></div>
+   <div class="feats" id="ip-feats"></div>
+   <div class="landf" id="ip-landf" hidden></div>
+  </div>
+  <div class="row2"><span class="count" id="ip-count" aria-live="polite"></span><button class="reset" id="ip-reset"></button></div>
+  <div class="grid" id="ip-grid"></div>
+
+  <div class="tools">
+   <p class="eyebrow" data-t="toolsEyebrow"></p>
+   <h3 data-t="toolsH"></h3>
+   <div class="tgrid">
+    <div class="panel" id="ip-sim">
+     <h3 data-t="simH"></h3><p class="s" data-t="simLead"></p>
+     <div class="fg">
+      <label class="f"><span data-t="simPrice"></span><input type="number" id="s-price" min="0" step="1000"></label>
+      <label class="f"><span data-t="simAcq"></span><input type="number" id="s-acq" min="0" step="0.1"></label>
+      <label class="f"><span data-t="simRev"></span><input type="number" id="s-rev" min="0" step="1000"></label>
+      <label class="f"><span data-t="simOpex"></span><input type="number" id="s-opex" min="0" max="100" step="0.5"></label>
+     </div>
+     <div class="out" id="s-out"></div>
+     <p class="note" data-t="simNote"></p>
+    </div>
+    <div class="panel" id="ip-val">
+     <h3 data-t="valH"></h3><p class="s" data-t="valLead"></p>
+     <div id="v-form"></div>
+    </div>
+   </div>
+  </div>
+
+  <div class="cta" id="ip-cta">
+   <p class="eyebrow" data-t="ctaEyebrow"></p>
+   <h3 data-t="ctaH"></h3>
+   <p data-t="ctaP"></p>
+   <div id="ip-cta-b"></div>
+  </div>
+  <p class="legal" data-t="legal"></p>
+
+  <dialog id="ip-modal"><div id="ip-modal-c"></div></dialog>
+  <dialog id="ip-form" class="narrow"><div class="m-body" id="ip-form-c"></div></dialog>
+  <dialog id="ip-short"><div class="m-body" id="ip-short-c"></div></dialog>
+ </div>
+</section>
+
+<script>
+(function(){
+/* ========= ΡΥΘΜΙΣΕΙΣ / SETTINGS ========= */
+/*CONFIG_START*/var CONFIG={
+ email:"info@investiaprop.com",
+ endpoint:"",
+ privacyUrl:"https://www.investiaprop.com/privacy-policy",
+ bookingUrl:"https://calendly.com/investia-properties-mnstamataki",
+ buyerFormUrl:"https://www.investiaprop.com/buyers-form",
+ whatsapp:"306932224111",
+ ndaUrl:"",
+ companyLine:"",
+ pageUrl:"",
+ showSimulator:true,
+ market:"gr",
+ currency:"EUR",
+ langs:["el","en"],
+ defaultLang:"el"
+};/*CONFIG_END*/
+var CATEGORIES=[
+ {k:"hotels",el:"Ξενοδοχεία",en:"Hotels",de:"Hotels"},
+ {k:"resorts",el:"Ξενοδοχειακά Συγκροτήματα & Resorts",en:"Hotel Complexes & Resorts",de:"Hotelanlagen & Resorts"},
+ {k:"aparthotels",el:"Aparthotels & Διαχειριζόμενα Διαμερίσματα",en:"Aparthotels & Serviced Apartments",de:"Aparthotels & Serviced Apartments"},
+ {k:"guesthouses",el:"Ξενώνες & Boutique Units",en:"Guesthouses & Boutique Units",de:"Gästehäuser & Boutique-Einheiten"},
+ {k:"glamping",el:"Camping & Glamping",en:"Camping & Glamping",de:"Camping & Glamping"},
+ {k:"beachclubs",el:"Beach Clubs & Εστίαση",en:"Beach Clubs & Restaurants",de:"Beach Clubs & Gastronomie"},
+ {k:"villas",el:"Βίλες",en:"Villas",de:"Villen"},
+ {k:"branded",el:"Branded Residences",en:"Branded Residences",de:"Branded Residences"},
+ {k:"apartments",el:"Διαμερίσματα & Κατοικίες",en:"Apartments & Residences",de:"Wohnungen & Residenzen"},
+ {k:"traditional",el:"Παραδοσιακά & Διατηρητέα Κτίρια",en:"Traditional & Listed Buildings",de:"Traditionelle & denkmalgeschützte Gebäude"},
+ {k:"land",el:"Οικόπεδα & Γη",en:"Land & Plots",de:"Grundstücke & Land"},
+ {k:"beachfront",el:"Παραθαλάσσια Ακίνητα",en:"Beachfront Properties",de:"Immobilien am Meer"},
+ {k:"islands",el:"Ιδιωτικά Νησιά & Νησίδες",en:"Private Islands & Islets",de:"Private Inseln & Inselchen"},
+ {k:"landbank",el:"Μεγάλες Εκτάσεις",en:"Large Land Banks",de:"Grosse Landflächen"},
+ {k:"development",el:"Αναπτυξιακά Projects",en:"Development Projects",de:"Entwicklungsprojekte"},
+ {k:"agri",el:"Αγροτικά & Κτήματα",en:"Estates & Agricultural",de:"Landgüter & Landwirtschaft"},
+ {k:"wineries",el:"Οινοποιεία & Αμπελώνες",en:"Wineries & Vineyards",de:"Weingüter & Rebberge"},
+ {k:"commercial",el:"Εμπορικά & Καταστήματα",en:"Commercial & Retail",de:"Gewerbe & Retail"},
+ {k:"offices",el:"Γραφεία",en:"Offices",de:"Büros"},
+ {k:"mixed",el:"Κτίρια Μικτής Χρήσης",en:"Mixed-Use Buildings",de:"Gebäude mit gemischter Nutzung"},
+ {k:"industrial",el:"Βιομηχανικά & Αποθήκες",en:"Industrial & Logistics",de:"Industrie & Logistik"},
+ {k:"marinas",el:"Marinas & Λιμενικές Εγκαταστάσεις",en:"Marinas & Harbour Assets",de:"Marinas & Hafenanlagen"},
+ {k:"special",el:"Ειδικής Χρήσης (Κλινικές, Σχολές, Οίκοι Ευγηρίας)",en:"Special Use (Clinics, Schools, Senior Living)",de:"Spezialnutzung (Kliniken, Schulen, Seniorenresidenzen)"},
+ {k:"energy",el:"Ενέργεια & ΑΠΕ (Γη / Έργα)",en:"Energy & Renewables (Land / Projects)",de:"Energie & erneuerbare Energien (Land / Projekte)"},
+ {k:"investment",el:"Επενδυτικά (Αξιοποίηση / Μετατροπή)",en:"Investment (Redevelopment / Conversion)",de:"Anlageobjekte (Entwicklung / Umnutzung)"}
+];
+var FEATURES=[
+ {k:"sea",el:"Θέα θάλασσα",en:"Sea view",de:"Meersicht"},
+ {k:"pool",el:"Πισίνα",en:"Pool",de:"Pool"},
+ {k:"beach",el:"Πρόσωπο σε θάλασσα",en:"Beach access",de:"Direkter Meerzugang"},
+ {k:"permit",el:"Με οικοδομική άδεια",en:"Building permit",de:"Mit Baubewilligung"},
+ {k:"license",el:"Λειτουργούσα επιχείρηση / άδεια",en:"Operating / licensed",de:"Laufender Betrieb / Lizenz"},
+ {k:"devpot",el:"Αναπτυξιακό δυναμικό",en:"Development potential",de:"Entwicklungspotenzial"},
+ {k:"devarea",el:"Σε περιοχή υπό ανάπτυξη",en:"In a developing area",de:"In Entwicklungsgebiet"}
+];
+var STATUSES=[{k:"available",el:"Διαθέσιμο",en:"Available",de:"Verfügbar"},{k:"negotiation",el:"Σε διαπραγμάτευση",en:"Under negotiation",de:"In Verhandlung"},{k:"reserved",el:"Κρατημένο",en:"Reserved",de:"Reserviert"},{k:"sold",el:"Πωλήθηκε",en:"Sold",de:"Verkauft"}];
+var SETTINGS=[{k:"town",el:"Εντός πόλης",en:"In town",de:"In der Stadt"},{k:"outskirts",el:"Εκτός πόλης",en:"Outside town",de:"Ausserhalb der Stadt"},{k:"village",el:"Σε χωριό",en:"In a village",de:"Im Dorf"},{k:"remote",el:"Απομονωμένη περιοχή",en:"Secluded / remote area",de:"Abgelegenes Gebiet"}];
+var SEAS=[{k:"seafront",el:"Πρόσωπο στη θάλασσα",en:"Seafront",de:"Direkt am Meer"},{k:"near",el:"Κοντά στη θάλασσα",en:"Near the sea",de:"In Meernähe"},{k:"inland",el:"Μακριά από τη θάλασσα",en:"Inland",de:"Landesinneres"}];
+var STYLES=[{k:"stone",el:"Πέτρινο",en:"Stone",de:"Naturstein"},{k:"modern",el:"Μοντέρνο κτίριο",en:"Modern building",de:"Moderner Bau"},{k:"steel",el:"Σιδηροκατασκευή",en:"Steel structure",de:"Stahlbau"},{k:"prefab",el:"Προκατ",en:"Prefabricated",de:"Fertigbau"},{k:"traditional",el:"Παραδοσιακής αισθητικής",en:"Traditional aesthetic",de:"Traditionelle Ästhetik"},{k:"minimal",el:"Μινιμαλ αισθητικής",en:"Minimalist aesthetic",de:"Minimalistische Ästhetik"},{k:"modernaes",el:"Μοντέρνας αισθητικής",en:"Modern aesthetic",de:"Moderne Ästhetik"}];
+var LAND_CATS=["land","beachfront","landbank","development","agri","wineries","islands","energy"];
+var LANDUSE=[{k:"building",el:"Για οικοδόμηση",en:"For building",de:"Zum Bauen"},{k:"farming",el:"Για καλλιέργεια",en:"For cultivation",de:"Für den Anbau"},{k:"tourism",el:"Για τουριστική ανάπτυξη",en:"For tourism development",de:"Für touristische Entwicklung"},{k:"commercial",el:"Για επαγγελματική / βιομηχανική χρήση",en:"For commercial / industrial use",de:"Für gewerbliche / industrielle Nutzung"},{k:"grazing",el:"Βοσκότοπος",en:"Grazing land",de:"Weideland"}];
+var ZONING=[{k:"inplan",el:"Εντός σχεδίου",en:"Within town plan",de:"Innerhalb des Bebauungsplans"},{k:"outplan",el:"Εκτός σχεδίου",en:"Outside town plan",de:"Ausserhalb des Bebauungsplans"},{k:"settlement",el:"Εντός οικισμού",en:"Within a settlement",de:"Innerhalb einer Siedlung"}];
+var BUILDABLE=[{k:"yes",el:"Οικοδομήσιμο",en:"Buildable",de:"Bebaubar"},{k:"conditions",el:"Οικοδομήσιμο υπό προϋποθέσεις",en:"Buildable under conditions",de:"Unter Bedingungen bebaubar"},{k:"no",el:"Μη οικοδομήσιμο",en:"Non-buildable",de:"Nicht bebaubar"}];
+var ACCESS=[{k:"asphalt",el:"Ασφαλτοστρωμένος δρόμος",en:"Paved road",de:"Asphaltierte Strasse"},{k:"rural",el:"Αγροτικός δρόμος",en:"Farm / dirt road",de:"Landwirtschafts- / Feldweg"},{k:"none",el:"Χωρίς άμεση πρόσβαση",en:"No direct access",de:"Keine direkte Zufahrt"}];
+var TOPO=[{k:"flat",el:"Επίπεδο",en:"Flat",de:"Eben"},{k:"sloping",el:"Επικλινές",en:"Sloping",de:"Hanglage"},{k:"terraced",el:"Αναβαθμίδες",en:"Terraced",de:"Terrassiert"}];
+var UTIL=[{k:"electricity",el:"Ρεύμα",en:"Electricity",de:"Strom"},{k:"water",el:"Νερό δικτύου",en:"Mains water",de:"Wasseranschluss"},{k:"sewage",el:"Αποχέτευση",en:"Sewage",de:"Kanalisation"},{k:"telecom",el:"Τηλεπικοινωνίες / οπτική ίνα",en:"Telecom / fibre",de:"Telekommunikation / Glasfaser"},{k:"borehole",el:"Γεώτρηση / πηγάδι",en:"Borehole / well",de:"Bohrloch / Brunnen"},{k:"irrigation",el:"Άρδευση",en:"Irrigation",de:"Bewässerung"}];
+var CADASTRE=[{k:"survey",el:"Τοπογραφικό διάγραμμα",en:"Topographic survey",de:"Vermessungsplan"},{k:"registry",el:"Εγγεγραμμένο στο Κτηματολόγιο",en:"Registered in the Cadastre",de:"Im Kataster eingetragen"}];
+var OLIVES=[{k:"yes",el:"Με ελιές",en:"With olive trees",de:"Mit Olivenbäumen"},{k:"no",el:"Χωρίς ελιές",en:"No olive trees",de:"Ohne Olivenbäume"}];
+var OUSE=[{k:"oil",el:"Ελαιοπαραγωγή",en:"Olive oil",de:"Olivenöl"},{k:"table",el:"Επιτραπέζιες ελιές",en:"Table olives",de:"Tafeloliven"},{k:"both",el:"Λάδι & επιτραπέζιες",en:"Oil & table olives",de:"Öl & Tafeloliven"}];
+var VARIETIES=[{k:"koroneiki",el:"Κορωνέικη",en:"Koroneiki",de:"Koroneiki"},{k:"tsounati",el:"Τσουνάτη",en:"Tsounati",de:"Tsounati"},{k:"mastoidis",el:"Μαστοειδής",en:"Mastoidis",de:"Mastoidis"},{k:"athinolia",el:"Αθηνολιά",en:"Athinolia",de:"Athinolia"},{k:"kalamon",el:"Καλαμών",en:"Kalamon",de:"Kalamon"},{k:"chalkidiki",el:"Χαλκιδικής",en:"Chalkidiki",de:"Chalkidiki"},{k:"manaki",el:"Μανάκι",en:"Manaki",de:"Manaki"},{k:"throumbolia",el:"Θρουμπολιά",en:"Throumbolia",de:"Throumbolia"},{k:"amfissis",el:"Αμφίσσης",en:"Amfissis",de:"Amfissis"},{k:"konservolia",el:"Κονσερβολιά",en:"Konservolia",de:"Konservolia"},{k:"kolovi",el:"Κολοβή",en:"Kolovi",de:"Kolovi"},{k:"megaritiki",el:"Μεγαρίτικη",en:"Megaritiki",de:"Megaritiki"},{k:"other",el:"Άλλη / μικτή",en:"Other / mixed",de:"Andere / gemischt"}];
+var GV=[{k:"250",el:"Golden Visa — όριο €250.000",en:"Golden Visa — €250,000 threshold"},{k:"800",el:"Golden Visa — όριο €800.000",en:"Golden Visa — €800,000 threshold"}];
+function gvOn(){return CONFIG.market!=="ch"}
+var PRICE_STEPS=[250000,500000,1000000,2000000,5000000,10000000];
+
+/* ========= ΒΑΣΗ ΔΕΔΟΜΕΝΩΝ ========= */
+/*DATA_START*/var PROPERTIES=[{"id": "INV-001", "cat": "hotels", "offmarket": true, "title": {"el": "ΔΕΙΓΜΑ — Boutique ξενοδοχείο, Δυτική Κρήτη", "en": "SAMPLE — Boutique hotel, Western Crete"}, "region": {"el": "Χανιά (Κρήτη)", "en": "Chania (Crete)"}, "geo": [35.51, 24.02, 0.25], "exact": false, "deals": ["sale", "lease"], "band": [2000000, 5000000], "rentBand": [200000, 400000], "rentPer": "year", "area": 1200, "land": 900, "rooms": 18, "status": "available", "features": ["sea", "license"], "summary": {"el": "Teaser: σύντομη, ανώνυμη περιγραφή χωρίς στοιχεία ταυτοποίησης.", "en": "Teaser: short anonymised description with no identifying details."}, "images": [], "image": "", "setting": "town", "sea": "near", "styles": ["traditional", "stone"], "gv": "250", "airportMin": 25}, {"id": "INV-002", "cat": "land", "offmarket": true, "title": {"el": "ΔΕΙΓΜΑ — Παραθαλάσσιο οικόπεδο", "en": "SAMPLE — Seafront plot"}, "region": {"el": "Πάρος", "en": "Paros"}, "geo": [37.04, 25.15, 0.1], "exact": false, "deals": ["sale"], "band": [1000000, 2000000], "area": null, "land": 5000, "rooms": null, "status": "available", "features": ["sea", "beach", "devpot"], "summary": {"el": "Teaser: σύντομη, ανώνυμη περιγραφή χωρίς στοιχεία ταυτοποίησης.", "en": "Teaser: short anonymised description with no identifying details."}, "images": [], "image": "", "setting": "remote", "sea": "seafront", "styles": [], "airportMin": 45, "landUse": ["farming", "building"], "zoning": "outplan", "buildable": "conditions", "bcoef": 0.2, "maxBuild": 200, "access": "rural", "topo": "sloping", "frontage": 40, "utilities": ["electricity", "borehole"], "cadastre": ["survey", "registry"], "olives": "yes", "olivesCount": 120, "olivesVariety": ["koroneiki"], "olivesUse": "oil", "olivesAge": {"el": "50+ ετών", "en": "50+ years"}, "organic": false, "crops": {"el": "Ελαιώνας", "en": "Olive grove"}}, {"id": "INV-003", "cat": "villas", "offmarket": false, "title": {"el": "ΔΕΙΓΜΑ — Βίλα με θέα (δημόσια καταχώριση)", "en": "SAMPLE — Villa with a view (public listing)"}, "region": {"el": "Ρέθυμνο (Κρήτη)", "en": "Rethymno (Crete)"}, "location": {"el": "Παλιά Πόλη", "en": "Old Town"}, "address": {"el": "Οδός Παραδείγματος 12", "en": "12 Example Street"}, "geo": [35.3667, 24.4803, 0.008], "exact": true, "deals": ["sale"], "price": 1450000, "area": 320, "land": 2000, "rooms": 5, "status": "available", "features": ["sea", "pool", "permit", "devarea"], "summary": {"el": "Κείμενο περιγραφής ακινήτου.", "en": "Property description text."}, "details": {"el": ["Χαρακτηριστικό 1", "Χαρακτηριστικό 2"], "en": ["Feature 1", "Feature 2"]}, "images": [], "image": "", "setting": "outskirts", "sea": "inland", "styles": ["modernaes", "minimal"], "gv": "800", "airportMin": 20, "kml": {"g": [{"t": "poly", "n": "Τεμάχιο (δείγμα)", "c": [[24.4799, 35.3664], [24.4807, 35.3664], [24.4808, 35.367], [24.4798, 35.3671]]}]}}, {"id": "INV-004", "cat": "hotels", "offmarket": true, "title": {"el": "ΔΕΙΓΜΑ — Ξενοδοχείο προς μίσθωση", "en": "SAMPLE — Hotel for lease"}, "region": {"el": "Ρόδος", "en": "Rhodes"}, "geo": [36.43, 28.22, 0.2], "exact": false, "deals": ["lease"], "rentBand": [300000, 600000], "rentPer": "year", "area": 2500, "land": null, "rooms": 40, "status": "negotiation", "features": ["devpot"], "summary": {"el": "Teaser: σύντομη, ανώνυμη περιγραφή χωρίς στοιχεία ταυτοποίησης.", "en": "Teaser: short anonymised description with no identifying details."}, "images": [], "image": "", "setting": "town", "sea": "seafront", "styles": ["modern"], "airportMin": 15}];/*DATA_END*/
+/* ========= ΤΕΛΟΣ ΔΕΔΟΜΕΝΩΝ ========= */
+
+PROPERTIES.forEach(function(p){if(p.features)p.features=p.features.filter(function(f){return f!=="golden"})});
+var BUYERS=[["private","Ιδιώτης επενδυτής","Private investor","Privatinvestor"],["fo","Family office","Family office","Family Office"],["inst","Θεσμικός / Fund","Institutional / Fund","Institutionell / Fonds"],["op","Φορέας λειτουργίας / Developer","Operator / Developer","Betreiber / Entwickler"],["adv","Σύμβουλος για λογαριασμό πελάτη","Advisor on behalf of a client","Berater im Auftrag eines Kunden"]];
+var INTENTS=[["sale","Πώληση","Sale","Verkauf"],["lease","Μίσθωση","Lease","Vermietung"],["both","Πώληση ή μίσθωση","Sale or lease","Verkauf oder Vermietung"]];
+var TIMES=[["now","Άμεσα","Immediately","Sofort"],["3-6","3–6 μήνες","3–6 months","3–6 Monate"],["6-12","6–12 μήνες","6–12 months","6–12 Monate"],["explore","Διερευνητικά","Exploring","Sondierend"]];
+
+var UI={
+el:{lead:"Προσπαθούμε να προσφέρουμε στους πελάτες μας τα πιο αξιόπιστα ακίνητα, καθώς και επιλογές off-market. Για πλήρη στοιχεία και ραντεβού, επικοινωνήστε μαζί μας.",all:"Όλα",search:"Αναζήτηση",region:"Περιοχή",allRegions:"Όλες",status:"Κατάσταση",anyStatus:"Όλες",minPrice:"Τιμή πώλησης από",maxPrice:"Τιμή πώλησης έως",any:"Οποιαδήποτε",minArea:"Ελάχιστα τ.μ.",minRooms:"Ελάχιστα δωμάτια",sort:"Ταξινόμηση",sNew:"Προεπιλογή",sPA:"Τιμή: χαμηλή → υψηλή",sPD:"Τιμή: υψηλή → χαμηλή",sA:"Έκταση: μεγάλη → μικρή",props:"ακίνητα",reset:"Καθαρισμός φίλτρων",more:"Περισσότερα φίλτρα",less:"Λιγότερα φίλτρα",none:"Κανένα ακίνητο δεν ταιριάζει με τα φίλτρα. Αφαιρέστε ένα φίλτρο ή επικοινωνήστε μαζί μας.",onReq:"Κατόπιν αιτήματος",deal:"Συναλλαγή",dealAny:"Πώληση & μίσθωση",dSale:"Πώληση",dLease:"Μίσθωση",dBoth:"Πώληση · Μίσθωση",rent:"Μίσθωμα",perMonth:" / μήνα",perYear:" / έτος",fIntent:"Τι σας ενδιαφέρει",prepFor:"Ετοιμάστηκε για",conf:"Εμπιστευτικό",personalFor:"Επιλεγμένα ακίνητα για",clientName:"Όνομα πελάτη (προαιρετικό, για προσωποποίηση)",pdfList:"Λήψη PDF λίστας",waMsg:"Γεια σας, ενδιαφέρομαι για το ακίνητο",ndaNext:"Επόμενο βήμα: υπογραφή NDA",tour:"360°",ppa:"Τιμή ανά μονάδα επιφάνειας",minAreaUs:"Ελάχιστα sq ft",landMinLUs:"Ελάχιστη έκταση γης (acres)",gv:"Golden Visa",air30:"Έως 30′ από αεροδρόμιο",airL:"Αεροδρόμιο",minU:"λεπτά",dlKml:"Λήψη KML (Google Earth)",plotOutline:"Όρια τεμαχίου",pdfBtn:"Λήψη παρουσίασης (PDF)",pdfContact:"Επικοινωνία",pdfGallery:"Φωτογραφίες",pdfVideos:"Βίντεο",pdfDetails:"Στοιχεία ακινήτου",pdfLoc:"Τοποθεσία",landH:"Γη & αγροτεμάχια",landUseL:"Χρήση γης",olivesL:"Ελιές",varietyL:"Ποικιλία ελιάς",zoningL:"Πολεοδομικό καθεστώς",accessL:"Πρόσβαση",topoL:"Μορφολογία εδάφους",utilL:"Υποδομές",landMinL:"Ελάχιστη έκταση γης (τ.μ.)",landInfo:"Στοιχεία γης",bldStatus:"Δόμηση",bcoefL:"Συντελεστής δόμησης",maxBuildL:"Μέγιστη δόμηση",frontageL:"Μέτωπο",oUseL:"Χρήση ελιάς",olivesAgeL:"Ηλικία δέντρων",organicL:"Βιολογική καλλιέργεια",cropsL:"Άλλες καλλιέργειες",treesU:"δέντρα",yes:"Ναι",video:"Βίντεο",setting:"Περιβάλλον",seaRel:"Σχέση με τη θάλασσα",style:"Στυλ κτιρίου",hGr:"Επιλεγμένα Ακίνητα στην Ελλάδα",hCh:"Επιλεγμένα Ακίνητα στην Ελβετία",openMap:"Άνοιγμα στο Google Maps",approxMap:"Ενδεικτική περιοχή. Η ακριβής θέση κοινοποιείται μετά από αίτημα πρόσβασης.",addr:"Διεύθυνση",copyLink:"Αντιγραφή συνδέσμου",linkCopied:"Ο σύνδεσμος αντιγράφηκε.",saveNote:"Η λίστα αποθηκεύεται στον browser αυτής της συσκευής. Αντιγράψτε τον σύνδεσμο για να την ανοίξετε αλλού ή να τη στείλετε.",sqm:" τ.μ.",land:"Γη ",price:"Τιμή",band:"Εύρος τιμής",bld:"Επιφάνεια κτιρίου",lnd:"Έκταση γης",rooms:"Δωμάτια",st:"Κατάσταση",close:"Κλείσιμο",code:"Κωδ. ",om:"Off-Market",inq:"Ζητήστε πληροφορίες",reqAccess:"Αίτημα πρόσβασης (NDA)",gate:"Η τοποθεσία, η ταυτότητα και τα πλήρη στοιχεία του ακινήτου δεν δημοσιεύονται και κοινοποιούνται μετά από αίτημα πρόσβασης και υπογραφή NDA.",subj:"Ενδιαφέρον για ακίνητο ",
+shortlist:"Λίστα επιλογών",save:"Αποθήκευση στη λίστα",unsave:"Αφαίρεση από τη λίστα",emptyList:"Η λίστα είναι κενή. Πατήστε την καρδιά σε ένα ακίνητο για να το προσθέσετε.",cmpH:"Η λίστα επιλογών σας",printPdf:"Εκτύπωση / PDF",emailList:"Αποστολή λίστας",remove:"Αφαίρεση",feat:"Χαρακτηριστικά",simulate:"Προσομοίωση απόδοσης",
+toolsEyebrow:"Εργαλεία & Υπηρεσίες",toolsH:"Για τον επενδυτή και τον ιδιοκτήτη",
+simH:"Προσομοιωτής επενδυτικής απόδοσης",simLead:"Συμπληρώστε τα δικά σας στοιχεία. Το εργαλείο κάνει μόνο αριθμητικούς υπολογισμούς και δεν είναι αποτίμηση.",simPrice:"Τιμή αγοράς ({cur})",simAcq:"Έξοδα απόκτησης (% της τιμής)",simRev:"Ετήσια ακαθάριστα έσοδα ({cur})",simOpex:"Λειτουργικά έξοδα (% των εσόδων)",totalInv:"Συνολική επένδυση",noi:"Καθαρό ετήσιο έσοδο",grossY:"Μικτή απόδοση",netY:"Καθαρή απόδοση",payback:"Περίοδος απόσβεσης",years:" έτη",simFill:"Συμπληρώστε και τα τέσσερα πεδία για να δείτε αποτελέσματα.",simNote:"Οι τιμές είναι δικές σας υποθέσεις. Δεν περιλαμβάνονται φόροι, χρηματοδότηση, αύξηση εσόδων ή κόστος κεφαλαίου. Δεν αποτελεί αποτίμηση, επενδυτική συμβουλή ή εγγύηση απόδοσης.",
+valH:"Εμπιστευτική αποτίμηση",valLead:"Αίτημα για επαγγελματική συζήτηση αποτίμησης ή πώλησης του ακινήτου σας. Δεν πρόκειται για αυτόματη εκτίμηση: θα επικοινωνήσουμε μαζί σας προσωπικά και με πλήρη εχεμύθεια.",
+ctaEyebrow:"Ιδιωτική πρόσβαση",ctaH:"Δεν βρήκατε αυτό που αναζητάτε;",ctaP:"Πολλές από τις ευκαιρίες μας δεν δημοσιεύονται. Πείτε μας τι αναζητάτε και θα σας παρουσιάσουμε μια επιλεγμένη πρόταση.",book:"Κλείστε συνάντηση",brief:"Προφίλ αγοραστή",
+legal:"Οι πληροφορίες είναι ενδεικτικές και υπόκεινται σε επαλήθευση. Δεν αποτελούν δημόσια προσφορά.",
+fName:"Ονοματεπώνυμο",fEmail:"Email",fPhone:"Τηλέφωνο",fCompany:"Εταιρεία / ιδιότητα",fBuyer:"Προφίλ",fBudget:"Εύρος ενδιαφέροντος",fNotes:"Σχόλια",fType:"Τύπος ακινήτου",fLoc:"Περιοχή / τοποθεσία",fArea:"Επιφάνεια κτιρίου (τ.μ.)",fLand:"Έκταση γης (τ.μ.)",fTime:"Χρονικός ορίζοντας",consent:"Συναινώ να επικοινωνήσετε μαζί μου και να επεξεργαστείτε τα στοιχεία μου για το αίτημά μου.",ndaAck:"Κατανοώ ότι τα πλήρη στοιχεία κοινοποιούνται υπό συμφωνητικό εμπιστευτικότητας (NDA) που θα υπογραφεί.",privacy:"Πολιτική απορρήτου",send:"Αποστολή",sent:"Το αίτημά σας εστάλη. Θα επικοινωνήσουμε σύντομα.",sentMail:"Άνοιξε το email σας με το αίτημα. Πατήστε «Αποστολή» εκεί για να ολοκληρωθεί.",errSend:"Η αποστολή απέτυχε. Δοκιμάστε ξανά ή γράψτε μας στο ",anyB:"Δεν δηλώνω"},
+en:{lead:"We strive to offer our clients the most reliable properties as well as off-market options. Contact us for full details and viewings.",all:"All",search:"Search",region:"Region",allRegions:"All",status:"Status",anyStatus:"All",minPrice:"Sale price from",maxPrice:"Sale price up to",any:"Any",minArea:"Min. area (sqm)",minRooms:"Min. rooms",sort:"Sort by",sNew:"Default",sPA:"Price: low → high",sPD:"Price: high → low",sA:"Area: large → small",props:"properties",reset:"Clear filters",more:"More filters",less:"Fewer filters",none:"No property matches these filters. Remove a filter or contact us.",onReq:"On request",deal:"Transaction",dealAny:"Sale & lease",dSale:"Sale",dLease:"Lease",dBoth:"Sale · Lease",rent:"Rent",perMonth:" / month",perYear:" / year",fIntent:"Your interest",prepFor:"Prepared for",conf:"Confidential",personalFor:"Selected properties for",clientName:"Client name (optional, to personalise)",pdfList:"Download shortlist PDF",waMsg:"Hello, I am interested in property",ndaNext:"Next step: sign the NDA",tour:"360°",ppa:"Price per unit area",minAreaUs:"Min. area (sq ft)",landMinLUs:"Min. land (acres)",gv:"Golden Visa",air30:"Within 30 min of an airport",airL:"Airport",minU:"min",dlKml:"Download KML (Google Earth)",plotOutline:"Plot boundary",pdfBtn:"Download presentation (PDF)",pdfContact:"Contact",pdfGallery:"Photos",pdfVideos:"Videos",pdfDetails:"Property details",pdfLoc:"Location",landH:"Land & plots",landUseL:"Land use",olivesL:"Olive trees",varietyL:"Olive variety",zoningL:"Zoning",accessL:"Access",topoL:"Terrain",utilL:"Utilities",landMinL:"Min. land (sqm)",landInfo:"Land details",bldStatus:"Building",bcoefL:"Building coefficient",maxBuildL:"Max. buildable area",frontageL:"Frontage",oUseL:"Olive use",olivesAgeL:"Tree age",organicL:"Organic cultivation",cropsL:"Other crops",treesU:"trees",yes:"Yes",video:"Video",setting:"Setting",seaRel:"Relation to the sea",style:"Building style",hGr:"Selected Properties in Greece",hCh:"Selected Properties in Switzerland",openMap:"Open in Google Maps",approxMap:"Approximate area. The exact location is shared after an access request.",addr:"Address",copyLink:"Copy link",linkCopied:"Link copied.",saveNote:"Your shortlist is saved in this device's browser. Copy the link to open it elsewhere or to send it.",sqm:" sqm",land:"Land ",price:"Price",band:"Price range",bld:"Built area",lnd:"Land area",rooms:"Rooms",st:"Status",close:"Close",code:"Ref. ",om:"Off-Market",inq:"Request information",reqAccess:"Request access (NDA)",gate:"Exact location, identity and full details are not published and are shared after an access request and a signed NDA.",subj:"Enquiry about property ",
+shortlist:"Shortlist",save:"Save to shortlist",unsave:"Remove from shortlist",emptyList:"Your shortlist is empty. Tap the heart on a property to add it.",cmpH:"Your shortlist",printPdf:"Print / PDF",emailList:"Send shortlist",remove:"Remove",feat:"Features",simulate:"Simulate yield",
+toolsEyebrow:"Tools & Services",toolsH:"For the investor and the owner",
+simH:"Investment yield simulator",simLead:"Enter your own figures. The tool only does arithmetic and is not a valuation.",simPrice:"Purchase price ({cur})",simAcq:"Acquisition costs (% of price)",simRev:"Annual gross revenue ({cur})",simOpex:"Operating costs (% of revenue)",totalInv:"Total investment",noi:"Net annual income",grossY:"Gross yield",netY:"Net yield",payback:"Payback period",years:" years",simFill:"Fill in all four fields to see results.",simNote:"All inputs are your own assumptions. Taxes, financing, revenue growth and cost of capital are not included. Not a valuation, investment advice or a guarantee of returns.",
+valH:"Confidential appraisal",valLead:"Request a professional appraisal or sale conversation for your property. This is not an automated estimate: we will contact you personally and in full confidence.",
+ctaEyebrow:"Private access",ctaH:"Not finding what you are looking for?",ctaP:"Many of our opportunities are not published. Tell us what you are looking for and we will present a curated selection.",book:"Book a discovery call",brief:"Buyer brief",
+legal:"Information is indicative and subject to verification. It does not constitute a public offer.",
+fName:"Full name",fEmail:"Email",fPhone:"Phone",fCompany:"Company / role",fBuyer:"Profile",fBudget:"Interest range",fNotes:"Notes",fType:"Property type",fLoc:"Region / location",fArea:"Built area (sqm)",fLand:"Land area (sqm)",fTime:"Time horizon",consent:"I agree to be contacted and for my details to be processed for this request.",ndaAck:"I understand that full details are shared under a confidentiality agreement (NDA) to be signed.",privacy:"Privacy policy",send:"Send",sent:"Your request has been sent. We will be in touch shortly.",sentMail:"Your email app has opened with the request. Press Send there to complete it.",errSend:"Sending failed. Please try again or write to us at ",anyB:"Prefer not to say"}
+,de:{"lead": "Wir bemühen uns, unseren Kundinnen und Kunden die zuverlässigsten Immobilien sowie Off-Market-Optionen anzubieten. Kontaktieren Sie uns für vollständige Unterlagen und Besichtigungen.", "all": "Alle", "search": "Suche", "region": "Region", "allRegions": "Alle", "status": "Status", "anyStatus": "Alle", "minPrice": "Kaufpreis ab", "maxPrice": "Kaufpreis bis", "any": "Beliebig", "minArea": "Min. Fläche (m²)", "minRooms": "Min. Zimmer", "sort": "Sortieren", "sNew": "Standard", "sPA": "Preis: aufsteigend", "sPD": "Preis: absteigend", "sA": "Fläche: gross → klein", "props": "Immobilien", "reset": "Filter zurücksetzen", "more": "Weitere Filter", "less": "Weniger Filter", "none": "Keine Immobilie entspricht den Filtern. Entfernen Sie einen Filter oder kontaktieren Sie uns.", "onReq": "Auf Anfrage", "deal": "Angebot", "dealAny": "Kauf & Miete", "dSale": "Kauf", "dLease": "Miete", "dBoth": "Kauf · Miete", "rent": "Miete", "perMonth": " / Monat", "perYear": " / Jahr", "fIntent": "Ihr Interesse", "prepFor": "Erstellt für", "conf": "Vertraulich", "personalFor": "Ausgewählte Immobilien für", "clientName": "Name des Kunden (optional, zur Personalisierung)", "pdfList": "Merkliste als PDF herunterladen", "waMsg": "Guten Tag, ich interessiere mich für die Immobilie", "ndaNext": "Nächster Schritt: NDA unterzeichnen", "tour": "360°", "ppa": "Preis pro Fläche", "minAreaUs": "Min. Fläche (sq ft)", "landMinLUs": "Min. Grundstück (Acres)", "gv": "Golden Visa", "air30": "Max. 30 Min. zum Flughafen", "airL": "Flughafen", "minU": "Min.", "dlKml": "KML herunterladen (Google Earth)", "plotOutline": "Grundstücksgrenzen", "pdfBtn": "Präsentation herunterladen (PDF)", "pdfContact": "Kontakt", "pdfGallery": "Fotos", "pdfVideos": "Videos", "pdfDetails": "Objektdaten", "pdfLoc": "Lage", "landH": "Land & Grundstücke", "landUseL": "Nutzung", "olivesL": "Olivenbäume", "varietyL": "Olivensorte", "zoningL": "Bauzone", "accessL": "Zufahrt", "topoL": "Gelände", "utilL": "Erschliessung", "landMinL": "Min. Grundstück (m²)", "landInfo": "Grundstücksdaten", "bldStatus": "Bebaubarkeit", "bcoefL": "Bebauungskoeffizient", "maxBuildL": "Max. bebaubare Fläche", "frontageL": "Frontbreite", "oUseL": "Verwendung der Oliven", "olivesAgeL": "Alter der Bäume", "organicL": "Biologischer Anbau", "cropsL": "Weitere Kulturen", "treesU": "Bäume", "yes": "Ja", "video": "Video", "setting": "Umgebung", "seaRel": "Lage zum Meer", "style": "Baustil", "hGr": "Ausgewählte Immobilien in Griechenland", "hCh": "Ausgewählte Immobilien in der Schweiz", "openMap": "In Google Maps öffnen", "approxMap": "Ungefähres Gebiet. Der genaue Standort wird nach einer Zugangsanfrage mitgeteilt.", "addr": "Adresse", "copyLink": "Link kopieren", "linkCopied": "Link kopiert.", "saveNote": "Ihre Merkliste wird im Browser dieses Geräts gespeichert. Kopieren Sie den Link, um sie anderswo zu öffnen oder zu versenden.", "sqm": " m²", "land": "Grundstück ", "price": "Preis", "band": "Preisspanne", "bld": "Gebäudefläche", "lnd": "Grundstücksfläche", "rooms": "Zimmer", "st": "Status", "close": "Schliessen", "code": "Ref. ", "om": "Off-Market", "inq": "Informationen anfordern", "reqAccess": "Zugang anfragen (NDA)", "gate": "Genauer Standort, Identität und vollständige Angaben werden nicht veröffentlicht und nach einer Zugangsanfrage und unterzeichneter NDA mitgeteilt.", "subj": "Anfrage zur Immobilie ", "shortlist": "Merkliste", "save": "Zur Merkliste hinzufügen", "unsave": "Von der Merkliste entfernen", "emptyList": "Ihre Merkliste ist leer. Tippen Sie bei einer Immobilie auf das Herz, um sie hinzuzufügen.", "cmpH": "Ihre Merkliste", "printPdf": "Drucken / PDF", "emailList": "Merkliste senden", "remove": "Entfernen", "feat": "Merkmale", "simulate": "Rendite simulieren", "toolsEyebrow": "Tools & Services", "toolsH": "Für Investoren und Eigentümer", "simH": "Renditesimulator", "simLead": "Geben Sie Ihre eigenen Zahlen ein. Das Tool rechnet nur und ist keine Bewertung.", "simPrice": "Kaufpreis ({cur})", "simAcq": "Erwerbsnebenkosten (% des Preises)", "simRev": "Jährliche Bruttoeinnahmen ({cur})", "simOpex": "Betriebskosten (% der Einnahmen)", "totalInv": "Gesamtinvestition", "noi": "Jährlicher Nettoertrag", "grossY": "Bruttorendite", "netY": "Nettorendite", "payback": "Amortisationsdauer", "years": " Jahre", "simFill": "Füllen Sie alle vier Felder aus, um Ergebnisse zu sehen.", "simNote": "Alle Angaben sind Ihre eigenen Annahmen. Steuern, Finanzierung, Ertragswachstum und Kapitalkosten sind nicht berücksichtigt. Keine Bewertung, keine Anlageberatung und keine Renditegarantie.", "valH": "Vertrauliche Bewertung", "valLead": "Fordern Sie ein professionelles Bewertungs- oder Verkaufsgespräch für Ihre Immobilie an. Das ist keine automatische Schätzung: Wir melden uns persönlich und streng vertraulich bei Ihnen.", "ctaEyebrow": "Privater Zugang", "ctaH": "Nicht das Richtige gefunden?", "ctaP": "Viele unserer Opportunitäten werden nicht veröffentlicht. Teilen Sie uns mit, was Sie suchen, und wir präsentieren Ihnen eine sorgfältige Auswahl.", "book": "Beratungsgespräch buchen", "brief": "Käuferprofil", "legal": "Die Angaben sind unverbindlich und unterliegen der Überprüfung. Sie stellen kein öffentliches Angebot dar.", "fName": "Vor- und Nachname", "fEmail": "E-Mail", "fPhone": "Telefon", "fCompany": "Unternehmen / Funktion", "fBuyer": "Profil", "fBudget": "Interessenbereich", "fNotes": "Bemerkungen", "fType": "Objektart", "fLoc": "Region / Standort", "fArea": "Gebäudefläche (m²)", "fLand": "Grundstücksfläche (m²)", "fTime": "Zeithorizont", "consent": "Ich bin einverstanden, dass Sie mich kontaktieren und meine Angaben für diese Anfrage verarbeiten.", "ndaAck": "Ich verstehe, dass vollständige Angaben nur unter einer noch zu unterzeichnenden Vertraulichkeitsvereinbarung (NDA) mitgeteilt werden.", "privacy": "Datenschutzerklärung", "send": "Senden", "sent": "Ihre Anfrage wurde gesendet. Wir melden uns in Kürze.", "sentMail": "Ihr E-Mail-Programm wurde mit der Anfrage geöffnet. Klicken Sie dort auf «Senden», um sie abzuschliessen.", "errSend": "Das Senden ist fehlgeschlagen. Bitte versuchen Sie es erneut oder schreiben Sie uns an ", "anyB": "Keine Angabe"}
+};
+
+var $=function(i){return document.getElementById(i)};
+var KEY="inv-shortlist-"+(CONFIG.market||"gr");
+var SQFT=10.7639104,ACRE=4046.8564224,FT=3.2808399;
+var U=(function(){var v=null;try{v=localStorage.getItem("inv-units")}catch(e){}if(v==="us"||v==="m")return v;var tz="";try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||""}catch(e){}return (/^en-US/i.test(navigator.language||"")&&/^(America\/(New_York|Chicago|Denver|Los_Angeles|Phoenix|Anchorage|Detroit|Boise|Indiana|Kentucky|Juneau|Sitka|Menominee|North_Dakota|Nome|Yakutat|Metlakatla)|Pacific\/Honolulu|US\/)/.test(tz))?"us":"m"})();
+var S,L=CONFIG.defaultLang,SL=[],advOpen=false,CLIENT="";
+if((CONFIG.langs||["el","en"]).indexOf(L)<0)L=(CONFIG.langs||["el"])[0];
+function fresh(){S={cat:"all",region:"all",deal:"all",status:"all",setting:"all",sea:"all",styles:{},gv:"all",air30:false,landUse:{},olives:"all",variety:{},zoning:"all",access:"all",topo:"all",util:{},landMin:0,pmin:0,pmax:0,amin:0,rooms:0,sort:"def",feats:{},q:""}}
+fresh();
+try{SL=JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){SL=[]}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(SL))}catch(e){}}
+function T(k){var v=UI[L][k];if(v==null)v=UI.en[k];if(isUS()&&UI[L][k+"Us"]!=null)v=UI[L][k+"Us"];return typeof v==="string"?v.replace(/\{cur\}/g,CONFIG.currency==="CHF"?"CHF":"€"):v}
+function tr(o){return o&&typeof o==="object"?(o[L]||(L==="de"?o.en:null)||o.el||o.en||""):(o||"")}
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function lab(arr,k){for(var i=0;i<arr.length;i++)if(arr[i].k===k)return arr[i][L]||arr[i].en||arr[i].el;return k}
+function loc(){return L==="el"?"el-GR":(L==="de"?"de-CH":(U==="us"?"en-US":"en-GB"))}
+function cs(){return CONFIG.currency==="CHF"?"CHF ":"€"}
+function eur(n){return cs()+n.toLocaleString(loc())}
+function short(n){return n>=1e6?cs()+(n/1e6).toLocaleString(loc())+"M":cs()+(n/1e3).toLocaleString(loc())+"K"}
+function priceOf(p){if(p.price!=null)return eur(p.price);if(p.band)return short(p.band[0])+" – "+short(p.band[1]);return T("onReq")}
+function num(n,u){return n==null?"—":n.toLocaleString(loc())+(u||"")}
+function isUS(){return U==="us"}
+function nf(n,d){return n.toLocaleString(loc(),{maximumFractionDigits:d==null?0:d})}
+function areaStr(m2){return m2==null?"—":(isUS()?nf(m2*SQFT)+" sq ft":nf(m2)+T("sqm"))}
+function landStr(m2){if(m2==null)return "—";if(isUS()){var ac=m2/ACRE;return nf(m2*SQFT)+" sq ft"+(ac>=0.2?" ("+nf(ac,2)+" acres)":"")}return nf(m2)+T("sqm")+(m2>=1000?" ("+(L==="el"?nf(m2/1000,2)+" στρ.":nf(m2/10000,2)+" ha")+")":"")}
+function lenStr(m){return m==null?"—":(isUS()?nf(m*FT,1)+" ft":nf(m,1)+" m")}
+function isLandCat(p){return LAND_CATS.indexOf(p.cat)>=0}
+function refArea(p){return isLandCat(p)?(p.land||p.area):(p.area||p.land)}
+function rngS(a,b,d,unit){var x=Math.abs(a-b)<1e-9?cs()+nf(a,d):cs()+nf(a,d)+" – "+cs()+nf(b,d);return x+unit}
+function saleMetrics(p){
+ var m=refArea(p);if(!hasSale(p)||!m)return [];
+ var a=p.price!=null?p.price:(p.band?p.band[0]:null),b=p.price!=null?p.price:(p.band?p.band[1]:null);if(a==null||b==null)return [];
+ var land=isLandCat(p),o=[];
+ if(isUS()){
+  if(land){o.push(rngS(a/(m/ACRE),b/(m/ACRE),0," / acre"));o.push(rngS(a/(m*SQFT),b/(m*SQFT),2," / sq ft"))}
+  else o.push(rngS(a/(m*SQFT),b/(m*SQFT),0," / sq ft"));
+ }else{
+  o.push(rngS(a/m,b/m,0," / m²"));
+  if(land)o.push(L==="el"?rngS(a/(m/1000),b/(m/1000),0," / στρ."):rngS(a/(m/10000),b/(m/10000),0," / ha"));
+ }
+ return o;
+}
+function rentData(p){
+ var m=refArea(p),basis=p.rentBasis==="sqm",a=null,b=null;
+ if(p.rent!=null){a=b=p.rent}else if(p.rentBand){a=p.rentBand[0];b=p.rentBand[1]}
+ if(a==null)return null;
+ var yr=p.rentPer==="year",tot=basis?(m?[a*m,b*m]:null):[a,b],sm=basis?[a,b]:(m?[a/m,b/m]:null),r={};
+ if(tot){r.mo=yr?[tot[0]/12,tot[1]/12]:tot;r.yr=yr?tot:[tot[0]*12,tot[1]*12]}
+ if(sm){r.smMo=yr?[sm[0]/12,sm[1]/12]:sm;r.smYr=yr?sm:[sm[0]*12,sm[1]*12]}
+ return r;
+}
+function rentLines(p){
+ var d=rentData(p);if(!d)return [T("onReq")];
+ var o=[],land=isLandCat(p);
+ if(d.mo)o.push(rngS(d.mo[0],d.mo[1],0,T("perMonth")));
+ if(d.yr)o.push(rngS(d.yr[0],d.yr[1],0,T("perYear")));
+ var conv=isUS()?(land?function(v){return v*ACRE}:function(v){return v/SQFT}):function(v){return v};
+ var us=isUS()?(land?" / acre":" / sq ft"):" / m²";
+ function rate(x,per){var y=[conv(x[0]),conv(x[1])],dd=Math.max(y[0],y[1])<100?2:0;return rngS(y[0],y[1],dd,us+per)}
+ if(d.smMo)o.push(rate(d.smMo,T("perMonth")));
+ if(d.smYr)o.push(rate(d.smYr,T("perYear")));
+ return o;
+}
+function imgs(p){return p.images&&p.images.length?p.images:(p.image?[p.image]:[])}
+function bgu(u){return u?' style="background-image:url(\''+esc(u)+'\')"':""}
+function bg(p){return bgu(imgs(p)[0])}
+function thumbs(p){var a=imgs(p);return a.length>1?'<div class="thumbs">'+a.map(function(u,i){return '<button type="button" data-th="'+i+'" data-pid="'+esc(p.id)+'"'+bgu(u)+' aria-label="Photo '+(i+1)+'"><\/button>'}).join("")+'<\/div>':""}
+function dealsOf(p){return p.deals&&p.deals.length?p.deals:["sale"]}
+function hasSale(p){return dealsOf(p).indexOf("sale")>=0}
+function hasLease(p){return dealsOf(p).indexOf("lease")>=0}
+function dealTxt(p){var a=hasSale(p),b=hasLease(p);return a&&b?T("dBoth"):(b?T("dLease"):T("dSale"))}
+function rentStr(p){return rentLines(p)[0]}
+function priceHtml(p){var a=[];
+ if(hasSale(p)){var sm=saleMetrics(p);a.push([T("dSale"),priceOf(p),sm.slice(0,2).join(" · ")])}
+ if(hasLease(p)){var rl=rentLines(p);a.push([T("rent"),rl[0],rl.slice(1,3).join(" · ")])}
+ var both=a.length>1;
+ return a.map(function(x){return '<div class="pl">'+(both?'<small>'+x[0]+'<\/small>':'')+x[1]+(x[2]?'<span class="pm">'+x[2]+'<\/span>':'')+'<\/div>'}).join("")}
+function priceText(p){var a=[];if(hasSale(p))a.push(priceOf(p));if(hasLease(p))a.push(T("rent")+": "+rentStr(p));return a.join(" / ")}
+function showLand(){if(LAND_CATS.indexOf(S.cat)>=0)return true;return S.cat==="all"&&PROPERTIES.some(function(p){return LAND_CATS.indexOf(p.cat)>=0})}
+function lopt(list,cur,any){return '<option value="all">'+any+'<\/option>'+list.map(function(x){return '<option value="'+x.k+'"'+(cur===x.k?' selected':'')+'>'+x[L]+'<\/option>'}).join("")}
+function lchk(list,state,attr){return list.map(function(f){return '<label class="chk"><input type="checkbox" data-'+attr+'="'+f.k+'"'+(state[f.k]?' checked':'')+'> '+f[L]+'<\/label>'}).join("")}
+function buildLand(){
+ var h='<p class="sh" style="color:var(--gold-d)">'+T("landH")+'<\/p><div class="landgrid">'
+ +'<label class="f"><span>'+T("olivesL")+'<\/span><select id="ip-olives">'+lopt(OLIVES,S.olives,T("any"))+'<\/select><\/label>'
+ +'<label class="f"><span>'+T("zoningL")+'<\/span><select id="ip-zoning">'+lopt(ZONING,S.zoning,T("any"))+'<\/select><\/label>'
+ +'<label class="f"><span>'+T("accessL")+'<\/span><select id="ip-access">'+lopt(ACCESS,S.access,T("any"))+'<\/select><\/label>'
+ +'<label class="f"><span>'+T("topoL")+'<\/span><select id="ip-topo">'+lopt(TOPO,S.topo,T("any"))+'<\/select><\/label>'
+ +'<label class="f"><span>'+T("landMinL")+'<\/span><input type="number" id="ip-landmin" min="0" step="'+(isUS()?"0.1":"100")+'" value="'+(S.landMin?(isUS()?+(S.landMin/ACRE).toFixed(2):S.landMin):"")+'"><\/label><\/div>'
+ +'<div class="feats"><span class="sh">'+T("landUseL")+'<\/span>'+lchk(LANDUSE,S.landUse,"lu")+'<\/div>'
+ +'<div class="feats"><span class="sh">'+T("varietyL")+'<\/span>'+lchk(VARIETIES,S.variety,"va")+'<\/div>'
+ +'<div class="feats"><span class="sh">'+T("utilL")+'<\/span>'+lchk(UTIL,S.util,"ut")+'<\/div>';
+ $("ip-landf").innerHTML=h;$("ip-landf").hidden=!showLand();
+}
+function lbls(list,arr){return (arr||[]).map(function(k){return lab(list,k)}).join(", ")}
+function cell(l,v){return v?'<div><small>'+l+'<\/small>'+v+'<\/div>':''}
+function landTxt(p){return landStr(p.land)}
+function landLine(p){var a=[];if((p.landUse||[]).length)a.push(lbls(LANDUSE,p.landUse));if(p.olives==="yes")a.push(lab(OLIVES,"yes")+(p.olivesCount!=null?" ("+num(p.olivesCount)+")":""));return a.length?'<div class="meta" style="color:var(--gold-d)">'+esc(a.join(" · "))+'<\/div>':''}
+function landHtml(p){
+ var c=[];
+ if((p.landUse||[]).length)c.push(cell(T("landUseL"),esc(lbls(LANDUSE,p.landUse))));
+ if(p.zoning)c.push(cell(T("zoningL"),esc(lab(ZONING,p.zoning))));
+ if(p.buildable)c.push(cell(T("bldStatus"),esc(lab(BUILDABLE,p.buildable))));
+ if(p.bcoef!=null)c.push(cell(T("bcoefL"),esc(String(p.bcoef))));
+ if(p.maxBuild!=null)c.push(cell(T("maxBuildL"),areaStr(p.maxBuild)));
+ if(p.access)c.push(cell(T("accessL"),esc(lab(ACCESS,p.access))));
+ if(p.topo)c.push(cell(T("topoL"),esc(lab(TOPO,p.topo))));
+ if(p.frontage!=null)c.push(cell(T("frontageL"),lenStr(p.frontage)));
+ if(p.olives==="no")c.push(cell(T("olivesL"),esc(lab(OLIVES,"no"))));
+ if(p.olives==="yes"){
+  c.push(cell(T("olivesL"),esc(lab(OLIVES,"yes")+(p.olivesCount!=null?" · "+num(p.olivesCount)+" "+T("treesU"):""))));
+  if((p.olivesVariety||[]).length||tr(p.olivesNote))c.push(cell(T("varietyL"),esc(lbls(VARIETIES,p.olivesVariety)+(tr(p.olivesNote)?((p.olivesVariety||[]).length?" · ":"")+tr(p.olivesNote):""))));
+  if(p.olivesUse)c.push(cell(T("oUseL"),esc(lab(OUSE,p.olivesUse))));
+  if(tr(p.olivesAge))c.push(cell(T("olivesAgeL"),esc(tr(p.olivesAge))));
+  if(p.organic)c.push(cell(T("organicL"),T("yes")));
+ }
+ if(tr(p.crops))c.push(cell(T("cropsL"),esc(tr(p.crops))));
+ var tags=(p.utilities||[]).map(function(k){return lab(UTIL,k)}).concat((p.cadastre||[]).map(function(k){return lab(CADASTRE,k)}));
+ if(!c.length&&!tags.length)return "";
+ return '<p class="eyebrow" style="margin:22px 0 0">'+T("landInfo")+'<\/p>'+(c.length?'<div class="specs">'+c.join("")+'<\/div>':'')+(tags.length?'<div class="tags">'+tags.map(function(x){return '<span>'+esc(x)+'<\/span>'}).join("")+'<\/div>':'');
+}
+function vEmbed(u){
+ u=String(u||"").trim();var m;
+ if((m=/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/.exec(u)))return {t:"f",s:"https://www.youtube-nocookie.com/embed/"+m[1]};
+ if((m=/vimeo\.com\/(?:video\/)?(\d+)/.exec(u)))return {t:"f",s:"https://player.vimeo.com/video/"+m[1]};
+ if((m=/my\.matterport\.com\/show\/?\?(?:.*&)?m=([A-Za-z0-9]+)/.exec(u)))return {t:"f",s:"https://my.matterport.com/show/?m="+m[1],k:"360"};
+ if(/^https?:\/\/.+\.(mp4|webm|mov)(\?.*)?$/i.test(u))return {t:"v",s:u};
+ return null;
+}
+function vids(p){var a=(p.videos||[]).filter(function(u){return vEmbed(u)});return a.length?'<div class="vids">'+a.map(function(u,i){var ve=vEmbed(u);return '<button type="button" class="btn alt sm" data-v="'+i+'" data-pid="'+esc(p.id)+'">▶ '+(ve&&ve.k==="360"?T("tour"):T("video"))+(a.length>1?' '+(i+1):'')+'<\/button>'}).join("")+'<\/div>':''}
+/* ---- KML outline (δημόσια ακίνητα μόνο) ---- */
+function kmlSvg(p,W,H){
+ var g=p.kml&&p.kml.g;if(!g||!g.length)return "";
+ var pts=[];g.forEach(function(x){(x.t==="pt"?[x.c]:x.c).forEach(function(c){pts.push(c)})});if(!pts.length)return "";
+ var minX=1e9,maxX=-1e9,minY=1e9,maxY=-1e9;pts.forEach(function(c){minX=Math.min(minX,c[0]);maxX=Math.max(maxX,c[0]);minY=Math.min(minY,c[1]);maxY=Math.max(maxY,c[1])});
+ var k=Math.cos((minY+maxY)/2*Math.PI/180),w=(maxX-minX)*k||1e-6,h=(maxY-minY)||1e-6,pad=18,sc=Math.min((W-2*pad)/w,(H-2*pad)/h);
+ function X(c){return (pad+((c[0]-minX)*k)*sc+((W-2*pad)-w*sc)/2).toFixed(1)}
+ function Y(c){return (H-pad-((c[1]-minY))*sc-((H-2*pad)-h*sc)/2).toFixed(1)}
+ var o='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="'+esc(T("plotOutline"))+'"><rect width="'+W+'" height="'+H+'" fill="#f3efe6"/>';
+ g.forEach(function(x){
+  if(x.t==="poly")o+='<polygon points="'+x.c.map(function(c){return X(c)+","+Y(c)}).join(" ")+'" fill="rgba(168,134,79,.28)" stroke="#8a6c3b" stroke-width="2" stroke-linejoin="round"/>';
+  else if(x.t==="line")o+='<polyline points="'+x.c.map(function(c){return X(c)+","+Y(c)}).join(" ")+'" fill="none" stroke="#111c26" stroke-width="1.6"/>';
+  else o+='<circle cx="'+X(x.c)+'" cy="'+Y(x.c)+'" r="4" fill="#111c26"/>';
+ });
+ o+='<g transform="translate('+(W-24)+',26)"><path d="M0,-14 L6,6 L0,2 L-6,6 Z" fill="#111c26"/><text y="20" text-anchor="middle" font-size="10" font-family="Arial" fill="#111c26">N<\/text><\/g><\/svg>';
+ return o;
+}
+function kmlHtml(p){
+ if(p.offmarket||!p.kml||!p.kml.g||!p.kml.g.length)return "";
+ return '<p class="eyebrow" style="margin:18px 0 6px">'+T("plotOutline")+'<\/p><div class="plot">'+kmlSvg(p,520,320)+'<\/div><p class="note" style="margin:0 0 12px"><button type="button" class="more" data-act="kml" data-id="'+esc(p.id)+'">'+T("dlKml")+'<\/button><\/p>';
+}
+function dlKml(p){
+ var g=(p.kml&&p.kml.g)||[],nm=esc(tr(p.title)||p.id);
+ function co(a){return a.map(function(c){return c[0]+","+c[1]+",0"}).join(" ")}
+ var pm=g.map(function(x,i){var n=esc(x.n||nm);
+  if(x.t==="poly")return '<Placemark><name>'+n+'<\/name><Polygon><outerBoundaryIs><LinearRing><coordinates>'+co(x.c)+' '+x.c[0][0]+','+x.c[0][1]+',0<\/coordinates><\/LinearRing><\/outerBoundaryIs><\/Polygon><\/Placemark>';
+  if(x.t==="line")return '<Placemark><name>'+n+'<\/name><LineString><coordinates>'+co(x.c)+'<\/coordinates><\/LineString><\/Placemark>';
+  return '<Placemark><name>'+n+'<\/name><Point><coordinates>'+x.c[0]+','+x.c[1]+',0<\/coordinates><\/Point><\/Placemark>'}).join("");
+ var xml='<?xml version="1.0" encoding="UTF-8"?><kml xmlns="http://www.opengis.net/kml/2.2"><Document><name>'+nm+'<\/name>'+pm+'<\/Document><\/kml>';
+ var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([xml],{type:"application/vnd.google-earth.kml+xml"}));a.download=(p.id||"plot")+".kml";document.body.appendChild(a);a.click();a.remove();
+}
+/* ---- Παρουσίαση PDF (εκτύπωση -> Αποθήκευση ως PDF) ---- */
+function presSpecs(p){
+ var c=[];
+ if(hasSale(p))c.push(cell(p.offmarket?T("band"):T("price"),esc(priceOf(p))));
+ if(hasSale(p)&&saleMetrics(p).length)c.push(cell(T("ppa"),saleMetrics(p).map(esc).join("<br>")));
+ if(hasLease(p))c.push(cell(T("rent"),rentLines(p).map(esc).join("<br>")));
+ c.push(cell(T("deal"),esc(dealTxt(p))));c.push(cell(T("st"),esc(lab(STATUSES,p.status))));
+ if(p.area)c.push(cell(T("bld"),esc(areaStr(p.area))));
+ if(p.land)c.push(cell(T("lnd"),esc(landTxt(p))));
+ if(p.rooms)c.push(cell(T("rooms"),esc(num(p.rooms))));
+ if(p.setting)c.push(cell(T("setting"),esc(lab(SETTINGS,p.setting))));
+ if(p.sea)c.push(cell(T("seaRel"),esc(lab(SEAS,p.sea))));
+ if(p.airportMin!=null)c.push(cell(T("airL"),"~"+p.airportMin+" "+T("minU")));
+ if(p.gv&&gvOn())c.push(cell("Golden Visa",esc(lab(GV,p.gv))));
+ return c.join("");
+}
+function presCss(){return '@page{size:A4;margin:0}*{box-sizing:border-box}html,body{margin:0}body{font-family:Manrope,Arial,sans-serif;color:#111c26;-webkit-print-color-adjust:exact;print-color-adjust:exact;font-size:10pt;line-height:1.55}'
+ +'.pg{width:210mm;height:297mm;position:relative;overflow:hidden;page-break-after:always;background:#fbfaf7}.pg:last-child{page-break-after:auto}'
+ +'h1,h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;margin:0;line-height:1.1}h1{font-size:32pt}h2{font-size:22pt}'
+ +'.eb{font-size:7.5pt;letter-spacing:.24em;text-transform:uppercase;color:#8a6c3b;font-weight:600;margin:0 0 8px}'
+ +'.cov{height:195mm;background:#111c26 center/cover no-repeat}.cp{padding:14mm 16mm}.pr{font-family:"Cormorant Garamond",Georgia,serif;font-size:20pt;color:#8a6c3b;margin-top:10px}'
+ +'.in{padding:18mm 16mm 22mm}.rule{width:40px;height:1px;background:#a8864f;margin:10px 0 14px}'
+ +'.specs{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #e4dfd3;margin:12px 0}.specs div{padding:7px 8px 7px 0;border-bottom:1px solid #e4dfd3;font-size:9.5pt}.specs small{display:block;color:#6b7682;font-size:6.5pt;letter-spacing:.14em;text-transform:uppercase}'
+ +'.tags span{display:inline-block;border:1px solid #e4dfd3;padding:2px 8px;margin:0 6px 6px 0;font-size:8pt;background:#fff}.eyebrow{font-size:7.5pt;letter-spacing:.24em;text-transform:uppercase;color:#8a6c3b;font-weight:600;margin:14px 0 0}'
+ +'.gate{border-left:2px solid #a8864f;background:#fff;padding:8px 12px;margin:12px 0;font-size:9pt}.plot{border:1px solid #e4dfd3;background:#fff;padding:6px;margin:8px 0}.plot svg{width:100%;height:auto;max-height:75mm}'
+ +'.gal{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin-top:10mm}.gal div{height:78mm;background:#e4dfd3 center/cover no-repeat}'
+ +'.ft{position:absolute;left:16mm;right:16mm;bottom:9mm;border-top:1px solid #e4dfd3;padding-top:3mm;font-size:7pt;color:#6b7682;display:flex;justify-content:space-between;gap:10mm}'
+ +'.cn{position:absolute;left:16mm;bottom:20mm;font-size:9pt}'}
+function presFt(client){var d=new Date().toLocaleDateString(loc());return '<div class="ft"><span>INVéSTIA Properties · '+esc(CONFIG.email)+' · investiaprop.com'+(CONFIG.companyLine?' · '+esc(CONFIG.companyLine):'')+'<\/span><span>'+(client?esc(T("prepFor"))+' '+esc(client)+' · '+d+' · '+esc(T("conf"))+' · ':'')+esc(T("legal"))+'<\/span><\/div>'}
+function presPages(p,ft){
+ var im=imgs(p),cover=im[0],pages='';
+ pages+='<div class="pg"><div class="cov"'+(cover?' style="background-image:url(\''+esc(cover)+'\')"':'')+'>'+(cover?'':'<div style="color:rgba(255,255,255,.35);font-family:Georgia,serif;letter-spacing:.4em;text-align:center;padding-top:85mm;font-size:20pt">INVéSTIA<\/div>')+'<\/div><div class="cp"><p class="eb">'+esc(lab(CATEGORIES,p.cat))+' · '+esc(locLine(p))+'<\/p><h1>'+esc(tr(p.title))+'<\/h1><div class="pr">'+esc(priceText(p))+'<\/div><\/div><div class="cn">'+esc(T("code"))+esc(p.id)+(p.offmarket?' · '+esc(T("om")):'')+'<\/div>'+ft+'<\/div>';
+ var d=(!p.offmarket&&p.details&&(p.details[L]||p.details.en||p.details.el))||[],g=(p.features||[]).map(function(f){return lab(FEATURES,f)}).concat((p.styles||[]).map(function(f){return lab(STYLES,f)}));
+ var loc2='';
+ if(!p.offmarket){var ex=p.exact&&p.geo;loc2='<p class="eyebrow">'+esc(T("pdfLoc"))+'<\/p><p style="margin:4px 0">'+esc(locLine(p))+(p.address&&tr(p.address)?'<br>'+esc(tr(p.address)):'')+(ex?'<br><span style="color:#6b7682">'+(+p.geo[0]).toFixed(5)+', '+(+p.geo[1]).toFixed(5)+' — google.com/maps?q='+(+p.geo[0]).toFixed(5)+','+(+p.geo[1]).toFixed(5)+'<\/span>':'')+'<\/p>'+(p.kml&&p.kml.g&&p.kml.g.length?'<div class="plot">'+kmlSvg(p,520,300)+'<\/div>':'')}
+ else loc2='<div class="gate">'+esc(T("gate"))+'<\/div>';
+ pages+='<div class="pg"><div class="in"><p class="eb">'+esc(T("pdfDetails"))+' · '+esc(p.id)+'<\/p><h2>'+esc(tr(p.title))+'<\/h2><div class="rule"><\/div><p>'+esc(tr(p.summary))+'<\/p><div class="specs">'+presSpecs(p)+'<\/div>'+(g.length?'<div class="tags">'+g.map(function(x){return '<span>'+esc(x)+'<\/span>'}).join("")+'<\/div>':'')+landHtml(p)+(d.length?'<ul style="margin:10px 0">'+d.map(function(x){return '<li>'+esc(x)+'<\/li>'}).join("")+'<\/ul>':'')+loc2+'<\/div>'+ft+'<\/div>';
+ var rest=im.slice(1,9);
+ if(rest.length){pages+='<div class="pg"><div class="in"><p class="eb">'+esc(T("pdfGallery"))+'<\/p><h2>'+esc(tr(p.title))+'<\/h2><div class="gal">'+rest.slice(0,6).map(function(u){return '<div style="background-image:url(\''+esc(u)+'\')"><\/div>'}).join("")+'<\/div><\/div>'+ft+'<\/div>'}
+ if(rest.length>6){pages+='<div class="pg"><div class="in"><p class="eb">'+esc(T("pdfGallery"))+'<\/p><div class="gal">'+rest.slice(6).map(function(u){return '<div style="background-image:url(\''+esc(u)+'\')"><\/div>'}).join("")+'<\/div><\/div>'+ft+'<\/div>'}
+ var vl=(p.videos||[]).filter(function(u){return vEmbed(u)});
+ if(vl.length)pages+='<div class="pg"><div class="in"><p class="eb">'+esc(T("pdfVideos"))+'<\/p>'+vl.map(function(u){return '<p><a href="'+esc(u)+'" style="color:#8a6c3b">'+esc(u)+'<\/a><\/p>'}).join("")+'<\/div>'+ft+'<\/div>';
+ return pages;
+}
+function presDoc(title,pages){
+ var X="<";
+ return X+'!doctype html>'+X+'html lang="'+L+'">'+X+'head>'+X+'meta charset="utf-8">'+X+'title>'+esc(title)+X+'/title>'+X+'link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">'+X+'style>'+presCss()+X+'/style>'+X+'/head>'+X+'body>'+pages+X+'/body>'+X+'/html>';
+}
+function presHtml(p,client){return presDoc((p.id||"")+" — "+tr(p.title),presPages(p,presFt(client)))}
+function portfolioHtml(items,client){
+ var ft=presFt(client||" "),d=new Date().toLocaleDateString(loc());
+ var cover='<div class="pg"><div class="in" style="padding-top:60mm"><p class="eb">INVéSTIA Properties · Exclusive Real Estate<\/p><h1>'+esc(T("cmpH"))+'<\/h1><div class="rule"><\/div>'+(client?'<p style="font-size:14pt">'+esc(T("prepFor"))+' <b>'+esc(client)+'<\/b><\/p>':'')+'<p style="color:#6b7682">'+d+' · '+esc(T("conf"))+'<\/p><div style="margin-top:14mm">'+items.map(function(p,i){return '<div style="padding:6px 0;border-bottom:1px solid #e4dfd3"><b>'+(i+1)+'. '+esc(tr(p.title))+'<\/b><br><span style="color:#6b7682;font-size:9pt">'+esc(p.id)+' · '+esc(lab(CATEGORIES,p.cat))+' · '+esc(locLine(p))+' · '+esc(priceText(p))+'<\/span><\/div>'}).join("")+'<\/div><\/div>'+ft+'<\/div>';
+ return presDoc(T("cmpH"),cover+items.map(function(p){return presPages(p,ft)}).join(""));
+}
+function printDoc(html){
+ var f=document.createElement("iframe");f.setAttribute("aria-hidden","true");f.style.cssText="position:fixed;right:0;bottom:0;width:0;height:0;border:0;opacity:0";
+ document.body.appendChild(f);
+ f.onload=function(){
+  var w=f.contentWindow,d=w.document,im=[].slice.call(d.images),t0=Date.now();
+  w.addEventListener("afterprint",function(){setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f)},500)});
+  (function wait(){
+   if(!im.every(function(i){return i.complete})&&Date.now()-t0<6000)return setTimeout(wait,150);
+   (d.fonts&&d.fonts.ready?d.fonts.ready:Promise.resolve()).then(function(){setTimeout(function(){w.focus();w.print()},250)});
+  })();
+ };
+ f.srcdoc=html;
+ setTimeout(function(){if(f.parentNode)f.parentNode.removeChild(f)},180000);
+}
+function printPres(p){track("download_pdf",{id:p.id});printDoc(presHtml(p,CLIENT))}
+function printPortfolio(){var items=SL.map(byId).filter(Boolean);if(!items.length)return;track("download_pdf",{type:"list",count:items.length});printDoc(portfolioHtml(items,CLIENT))}
+function track(name,params){try{var o={market:CONFIG.market};for(var k in (params||{}))o[k]=params[k];if(typeof window.gtag==="function")window.gtag("event",name,o);else if(window.dataLayer&&window.dataLayer.push){o.event=name;window.dataLayer.push(o)}}catch(e){}}
+function waUrl(text){return "https://wa.me/"+String(CONFIG.whatsapp||"").replace(/\D/g,"")+"?text="+encodeURIComponent(text)}
+function byId(id){for(var i=0;i<PROPERTIES.length;i++)if(PROPERTIES[i].id===id)return PROPERTIES[i]}
+function opts(list,first){return '<option value="0">'+first+'<\/option>'+list.map(function(v){return '<option value="'+v+'">'+eur(v)+'<\/option>'}).join("")}
+function locLine(p){return p.offmarket?tr(p.region):(tr(p.location)?tr(p.location)+', ':'')+tr(p.region)}
+function nAdv(){var n=0;if(S.pmin)n++;if(S.pmax)n++;if(S.amin)n++;if(S.rooms)n++;if(S.setting!=="all")n++;if(S.sea!=="all")n++;for(var k in S.feats)if(S.feats[k])n++;for(var q in S.styles)if(S.styles[q])n++;for(var a1 in S.landUse)if(S.landUse[a1])n++;for(var a2 in S.variety)if(S.variety[a2])n++;for(var a3 in S.util)if(S.util[a3])n++;if(S.olives!=="all")n++;if(S.zoning!=="all")n++;if(S.access!=="all")n++;if(S.topo!=="all")n++;if(S.landMin)n++;if(S.gv!=="all")n++;if(S.air30)n++;return n}
+function moreLabel(){var n=nAdv();return (advOpen?T("less"):T("more"))+(n?" ("+n+")":"")}
+
+function build(){
+ $("ip-langs").innerHTML=(CONFIG.langs||["el","en"]).map(function(l){return '<button data-l="'+l+'">'+({el:"ΕΛ",en:"EN",de:"DE"})[l]+'<\/button>'}).join(' <span>|<\/span> ');
+ $("ip-h").textContent=T(CONFIG.market==="ch"?"hCh":"hGr");$("ip-lead").textContent=T("lead");
+ document.querySelectorAll("#inv-props [data-t]").forEach(function(e){e.textContent=T(e.dataset.t)});
+ document.querySelectorAll("#inv-props .lang button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.l?b.dataset.l===L:b.dataset.u===U)});
+ $("ip-reset").textContent=T("reset");
+ $("ip-banner").hidden=!CLIENT;$("ip-banner").textContent=CLIENT?T("personalFor")+" "+CLIENT:"";
+ var lg=document.querySelector("#inv-props .legal");if(lg)lg.textContent=T("legal")+(CONFIG.companyLine?" · "+CONFIG.companyLine:"");
+ $("ip-sim").style.display=CONFIG.showSimulator===false?"none":"";
+ var seen={},rg=['<option value="all">'+T("allRegions")+'<\/option>'];
+ PROPERTIES.forEach(function(p){var r=(p.region&&(p.region.en||p.region.el))||"";if(!seen[r]){seen[r]=1;rg.push('<option value="'+esc(r)+'">'+esc(tr(p.region))+'<\/option>')}});
+ $("ip-region").innerHTML=rg.join("");$("ip-region").value=S.region;
+ $("ip-status").innerHTML='<option value="all">'+T("anyStatus")+'<\/option>'+STATUSES.map(function(s){return '<option value="'+s.k+'">'+s[L]+'<\/option>'}).join("");$("ip-status").value=S.status;
+ $("ip-deal").innerHTML=[["all",T("dealAny")],["sale",T("dSale")],["lease",T("dLease")]].map(function(x){return '<option value="'+x[0]+'">'+x[1]+'<\/option>'}).join("");$("ip-deal").value=S.deal;
+ $("ip-pmin").innerHTML=opts(PRICE_STEPS,T("any"));$("ip-pmax").innerHTML=opts(PRICE_STEPS,T("any"));
+ $("ip-pmin").value=S.pmin;$("ip-pmax").value=S.pmax;
+ $("ip-rooms").innerHTML=[0,2,3,4,5,8,10,20].map(function(n){return '<option value="'+n+'">'+(n?n+"+":T("any"))+'<\/option>'}).join("");$("ip-rooms").value=S.rooms;
+ $("ip-sort").innerHTML=[["def","sNew"],["pa","sPA"],["pd","sPD"],["a","sA"]].map(function(x){return '<option value="'+x[0]+'">'+T(x[1])+'<\/option>'}).join("");$("ip-sort").value=S.sort;
+ $("ip-amin").value=S.amin?Math.round(S.amin*(isUS()?SQFT:1)):"";$("ip-q").value=S.q;
+ $("ip-feats").innerHTML='<span class="sh">'+T("feat")+'<\/span>'+FEATURES.map(function(f){return '<label class="chk"><input type="checkbox" data-f="'+f.k+'"'+(S.feats[f.k]?' checked':'')+'> '+f[L]+'<\/label>'}).join("");
+ $("ip-feats").insertAdjacentHTML("beforeend",'<label class="chk"><input type="checkbox" data-air="1"'+(S.air30?' checked':'')+'> '+T("air30")+'<\/label>');
+ $("ip-styles").innerHTML='<span class="sh">'+T("style")+'<\/span>'+STYLES.map(function(f){return '<label class="chk"><input type="checkbox" data-st="'+f.k+'"'+(S.styles[f.k]?' checked':'')+'> '+f[L]+'<\/label>'}).join("");
+ $("ip-setting").innerHTML='<option value="all">'+T("any")+'<\/option>'+SETTINGS.map(function(x){return '<option value="'+x.k+'">'+x[L]+'<\/option>'}).join("");$("ip-setting").value=S.setting;
+ $("ip-sea").innerHTML='<option value="all">'+T("any")+'<\/option>'+SEAS.map(function(x){return '<option value="'+x.k+'">'+x[L]+'<\/option>'}).join("");$("ip-sea").value=S.sea;
+ $("ip-gvw").style.display=gvOn()?"":"none";$("ip-gv").innerHTML='<option value="all">'+T("any")+'<\/option>'+GV.map(function(x){return '<option value="'+x.k+'">'+x[L]+'<\/option>'}).join("");$("ip-gv").value=S.gv;
+ buildLand();
+ $("ip-adv").hidden=!advOpen;$("ip-more").setAttribute("aria-expanded",advOpen);$("ip-more").textContent=moreLabel();
+ var cb=[];
+ if(CONFIG.bookingUrl)cb.push('<a class="btn" href="'+esc(CONFIG.bookingUrl)+'" target="_blank" rel="noopener">'+T("book")+'<\/a>');
+ if(CONFIG.whatsapp)cb.push('<a class="btn alt" href="'+esc(waUrl(T("waMsg")))+'" target="_blank" rel="noopener">WhatsApp<\/a>');
+ if(CONFIG.buyerFormUrl)cb.push('<a class="btn alt" href="'+esc(CONFIG.buyerFormUrl)+'" target="_blank" rel="noopener">'+T("brief")+'<\/a>');
+ $("ip-cta-b").innerHTML=cb.join("");
+ tabs();grid();shortBtn();sim();valForm();
+}
+function tabs(){
+ var all=[{k:"all",el:T("all"),en:T("all"),de:T("all")}].concat(CATEGORIES);
+ function cnt(c){return c.k==="all"?PROPERTIES.length:PROPERTIES.filter(function(p){return p.cat===c.k}).length}
+ $("ip-tabs").innerHTML=all.filter(function(c){return c.k==="all"||cnt(c)>0||S.cat===c.k}).map(function(c){var n=cnt(c);
+  return '<button class="tab" data-c="'+c.k+'" aria-pressed="'+(S.cat===c.k)+'">'+esc(c[L])+'<sup>'+n+'<\/sup><\/button>'}).join("");
+}
+function lo(p){return !hasSale(p)?null:(p.price!=null?p.price:(p.band?p.band[0]:null))}
+function hi(p){return !hasSale(p)?null:(p.price!=null?p.price:(p.band?p.band[1]:null))}
+function list(){
+ var r=PROPERTIES.filter(function(p){
+  if(S.cat!=="all"&&p.cat!==S.cat)return false;
+  if(S.region!=="all"&&((p.region&&(p.region.en||p.region.el))||"")!==S.region)return false;
+  if(S.deal!=="all"&&dealsOf(p).indexOf(S.deal)<0)return false;
+  if(S.status!=="all"&&p.status!==S.status)return false;
+  if(S.pmin&&(hi(p)==null||hi(p)<S.pmin))return false;
+  if(S.pmax&&(lo(p)==null||lo(p)>S.pmax))return false;
+  if(S.amin&&(p.area||p.land||0)<S.amin)return false;
+  if(S.rooms&&(p.rooms||0)<S.rooms)return false;
+  if(S.setting!=="all"&&p.setting!==S.setting)return false;
+  if(S.sea!=="all"&&p.sea!==S.sea)return false;
+  var sel=[];for(var q in S.styles)if(S.styles[q])sel.push(q);
+  if(sel.length&&!sel.some(function(x){return (p.styles||[]).indexOf(x)>=0}))return false;
+  function ks(o){var r=[];for(var z in o)if(o[z])r.push(z);return r}
+  var lu=ks(S.landUse);if(lu.length&&!lu.some(function(x){return (p.landUse||[]).indexOf(x)>=0}))return false;
+  var va=ks(S.variety);if(va.length&&!va.some(function(x){return (p.olivesVariety||[]).indexOf(x)>=0}))return false;
+  var ut=ks(S.util);if(ut.length&&!ut.every(function(x){return (p.utilities||[]).indexOf(x)>=0}))return false;
+  if(S.olives!=="all"&&p.olives!==S.olives)return false;
+  if(S.zoning!=="all"&&p.zoning!==S.zoning)return false;
+  if(S.access!=="all"&&p.access!==S.access)return false;
+  if(S.topo!=="all"&&p.topo!==S.topo)return false;
+  if(S.landMin&&(p.land||0)<S.landMin)return false;
+  if(S.gv!=="all"&&p.gv!==S.gv)return false;
+  if(S.air30&&!(p.airportMin!=null&&p.airportMin<=30))return false;
+  for(var k in S.feats)if(S.feats[k]&&(p.features||[]).indexOf(k)<0)return false;
+  if(S.q){var h=(tr(p.title)+" "+locLine(p)+" "+tr(p.summary)+" "+p.id).toLowerCase();if(h.indexOf(S.q)<0)return false}
+  return true});
+ function mid(p){var a=lo(p),b=hi(p);return a==null?null:(a+b)/2}
+ if(S.sort==="pa")r.sort(function(a,b){return (mid(a)==null)-(mid(b)==null)||mid(a)-mid(b)});
+ if(S.sort==="pd")r.sort(function(a,b){return (mid(a)==null)-(mid(b)==null)||mid(b)-mid(a)});
+ if(S.sort==="a")r.sort(function(a,b){return (b.area||b.land||0)-(a.area||a.land||0)});
+ var live=r.filter(function(p){return p.status!=="sold"}),sold=r.filter(function(p){return p.status==="sold"});
+ return live.concat(sold);
+}
+function specs(p){var a=[];if(p.area)a.push(areaStr(p.area));if(p.land)a.push(T("land")+landStr(p.land));if(p.rooms)a.push(p.rooms+" "+(L==="el"?"δωμ.":(L==="de"?"Zi.":"rooms")));return a.join(" · ")}
+function grid(){
+ var r=list();$("ip-count").textContent=r.length+" "+T("props");
+ $("ip-grid").innerHTML=r.length?r.map(function(p,i){
+  var on=SL.indexOf(p.id)>=0,hasI=imgs(p).length>0;
+  return '<article class="card'+(p.status==="sold"?" sold":"")+'" style="animation-delay:'+Math.min(i,8)*60+'ms"><button class="open" data-id="'+esc(p.id)+'"><div class="ph'+(hasI?'':' noimg')+'"><div class="pi"'+bg(p)+'><\/div><span class="badge">'+lab(STATUSES,p.status)+'<\/span>'+(p.gv&&gvOn()?'<span class="badge gv">Golden Visa €'+(p.gv==="250"?"250K":"800K")+'<\/span>':'')+(p.offmarket?'<span class="badge om">'+T("om")+'<\/span>':'')+'<span class="badge dl">'+dealTxt(p)+'<\/span><\/div><div class="body"><div class="loc">'+esc(lab(CATEGORIES,p.cat))+' · '+esc(locLine(p))+'<\/div><div class="ttl">'+esc(tr(p.title))+'<\/div><div class="meta">'+esc(specs(p))+'<\/div>'+landLine(p)+'<div class="price">'+priceHtml(p)+'<\/div><\/div><\/button><button class="save" data-s="'+esc(p.id)+'" aria-pressed="'+on+'" aria-label="'+(on?T("unsave"):T("save"))+'">'+(on?'♥':'♡')+'<\/button><\/article>'}).join(""):'<p class="empty">'+T("none")+'<\/p>';
+}
+function shortBtn(){$("ip-shortbtn").textContent="♥ "+T("shortlist")+" ("+SL.length+")"}
+function toggle(id){var i=SL.indexOf(id);if(i<0){SL.push(id);track("add_to_shortlist",{id:id})}else SL.splice(i,1);persist();shortBtn();grid()}
+
+function mapHtml(p){
+ var g=p.geo;if(!g||g.length<2||isNaN(+g[0])||isNaN(+g[1]))return "";
+ var lat=+g[0],lng=+g[1],sp=+g[2]||0.2,ex=!!p.exact&&!p.offmarket;
+ if(ex)sp=0.008;
+ var bb=[(lng-sp*1.5).toFixed(5),(lat-sp).toFixed(5),(lng+sp*1.5).toFixed(5),(lat+sp).toFixed(5)].join(",");
+ var src="https://www.openstreetmap.org/export/embed.html?bbox="+bb+"&layer=mapnik"+(ex?"&marker="+lat+","+lng:"");
+ var link=ex?' <a href="https://www.google.com/maps/search/?api=1&query='+lat+','+lng+'" target="_blank" rel="noopener" style="color:var(--gold-d)">'+T("openMap")+'<\/a>':'';
+ return '<div class="map"><iframe src="'+src+'" loading="lazy" title="Map" referrerpolicy="no-referrer-when-downgrade"><\/iframe><\/div><p class="note" style="margin:0 0 12px">'+(ex?'':T("approxMap"))+link+'<\/p>';
+}
+function modal(id){
+ var p=byId(id);if(!p)return;track("view_property",{id:p.id});
+ var d=(!p.offmarket&&p.details&&(p.details[L]||p.details.en||p.details.el))||[],on=SL.indexOf(p.id)>=0,hasI=imgs(p).length>0;
+ $("ip-modal-c").innerHTML='<div class="mod"><button class="x" data-act="close" aria-label="'+T("close")+'">×<\/button><div class="mg"><div class="m-img'+(hasI?'':' noimg')+'" id="ip-mimg"'+bg(p)+'><\/div>'+thumbs(p)+vids(p)+'<\/div><div class="mi"><div class="loc">'+esc(lab(CATEGORIES,p.cat))+' · '+esc(locLine(p))+'<\/div><h3>'+esc(tr(p.title))+'<\/h3><p class="note" style="margin:0 0 12px">'+T("code")+esc(p.id)+(p.offmarket?' · '+T("om"):'')+'<\/p>'+(!p.offmarket&&p.address&&tr(p.address)?'<p class="note" style="margin:-4px 0 12px">'+T("addr")+': '+esc(tr(p.address))+'<\/p>':'')+'<p>'+esc(tr(p.summary))+'<\/p><div class="specs">'+(hasSale(p)?'<div><small>'+(p.offmarket?T("band"):T("price"))+'<\/small>'+priceOf(p)+'<\/div>':'')+(hasSale(p)&&saleMetrics(p).length?'<div><small>'+T("ppa")+'<\/small>'+saleMetrics(p).join("<br>")+'<\/div>':'')+(hasLease(p)?'<div><small>'+T("rent")+'<\/small>'+rentLines(p).join("<br>")+'<\/div>':'')+'<div><small>'+T("deal")+'<\/small>'+dealTxt(p)+'<\/div><div><small>'+T("st")+'<\/small>'+lab(STATUSES,p.status)+'<\/div><div><small>'+T("bld")+'<\/small>'+areaStr(p.area)+'<\/div><div><small>'+T("lnd")+'<\/small>'+landTxt(p)+'<\/div><div><small>'+T("rooms")+'<\/small>'+num(p.rooms)+'<\/div>'+(p.setting?'<div><small>'+T("setting")+'<\/small>'+lab(SETTINGS,p.setting)+'<\/div>':'')+(p.sea?'<div><small>'+T("seaRel")+'<\/small>'+lab(SEAS,p.sea)+'<\/div>':'')+(p.airportMin!=null?'<div><small>'+T("airL")+'<\/small>~'+p.airportMin+' '+T("minU")+'<\/div>':'')+(p.gv&&gvOn()?'<div><small>Golden Visa<\/small>'+esc(lab(GV,p.gv))+'<\/div>':'')+'<\/div>'+((p.features||[]).length||(p.styles||[]).length?'<div class="tags">'+(p.styles||[]).map(function(f){return '<span>'+esc(lab(STYLES,f))+'<\/span>'}).join("")+(p.features||[]).map(function(f){return '<span>'+esc(lab(FEATURES,f))+'<\/span>'}).join("")+'<\/div>':'')+landHtml(p)+(p.offmarket?'<div class="gate">'+T("gate")+'<\/div>':'')+mapHtml(p)+kmlHtml(p)+(d.length?'<ul>'+d.map(function(x){return '<li>'+esc(x)+'<\/li>'}).join("")+'<\/ul>':'')+'<div class="actions"><button class="btn" data-act="'+(p.offmarket?'access':'info')+'" data-id="'+esc(p.id)+'">'+(p.offmarket?T("reqAccess"):T("inq"))+'<\/button><button class="btn alt" data-s="'+esc(p.id)+'" data-keep="1">'+(on?'♥ '+T("unsave"):'♡ '+T("save"))+'<\/button><button class="btn alt" data-act="pdf" data-id="'+esc(p.id)+'">'+T("pdfBtn")+'<\/button>'+(CONFIG.whatsapp?'<a class="btn alt" data-act="wa" data-id="'+esc(p.id)+'" href="'+esc(waUrl(T("waMsg")+" "+p.id+" — "+tr(p.title)))+'" target="_blank" rel="noopener">WhatsApp<\/a>':'')+(p.price!=null&&hasSale(p)&&CONFIG.showSimulator!==false?'<button class="btn alt" data-act="sim" data-id="'+esc(p.id)+'">'+T("simulate")+'<\/button>':'')+'<\/div><\/div><\/div>';
+ $("ip-modal").showModal();
+}
+
+/* ---- Φόρμες ---- */
+function fld(name,label,type,req,extra){return '<label class="f" style="margin-bottom:14px"><span>'+label+(req?' *':'')+'<\/span><input type="'+type+'" name="'+name+'"'+(req?' required':'')+(extra||'')+'><\/label>'}
+function sel(name,label,rows,req){return '<label class="f" style="margin-bottom:14px"><span>'+label+(req?' *':'')+'<\/span><select name="'+name+'"'+(req?' required':'')+'><option value="">—<\/option>'+rows.map(function(r){return '<option value="'+esc(r[L==="el"?1:(L==="de"&&r[3]?3:2)])+'">'+esc(r[L==="el"?1:(L==="de"&&r[3]?3:2)])+'<\/option>'}).join("")+'<\/select><\/label>'}
+function chk(name,text){return '<label class="chk" style="margin:12px 0"><input type="checkbox" name="'+name+'" required><span>'+text+'<\/span><\/label>'}
+function priv(){return CONFIG.privacyUrl?' <a href="'+esc(CONFIG.privacyUrl)+'" target="_blank" rel="noopener" style="color:var(--gold-d)">'+T("privacy")+'<\/a>':''}
+function hp(){return '<input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">'}
+function budgetRows(){var r=[];for(var i=0;i<=PRICE_STEPS.length;i++){var a=i?PRICE_STEPS[i-1]:0,b=PRICE_STEPS[i];var s=b==null?"> "+short(a):(a?short(a)+" – "+short(b):"< "+short(b));r.push([0,s,s])}r.push([0,T("anyB"),T("anyB")]);return r}
+function catRows(){return CATEGORIES.map(function(c){return [0,c.el,c.en,c.de||c.en]})}
+
+function accessForm(p){
+ $("ip-form-c").innerHTML='<p class="eyebrow">'+T("om")+'<\/p><h3>'+T("reqAccess")+'<\/h3><p class="note" style="margin:8px 0 22px">'+esc(T("code")+p.id+" — "+tr(p.title))+'<\/p><form data-kind="access" data-ref="'+esc(p.id)+'" data-title="'+esc(tr(p.title))+'">'+hp()+fld("name",T("fName"),"text",1)+fld("email",T("fEmail"),"email",1)+fld("phone",T("fPhone"),"tel",0)+fld("company",T("fCompany"),"text",0)+sel("buyer",T("fBuyer"),BUYERS,1)+sel("budget",T("fBudget"),budgetRows(),0)+'<label class="f" style="margin-bottom:14px"><span>'+T("fNotes")+'<\/span><textarea name="notes" rows="3"><\/textarea><\/label>'+chk("nda",T("ndaAck"))+chk("consent",T("consent")+priv())+'<div class="actions"><button class="btn" type="submit">'+T("send")+'<\/button><button class="btn alt" type="button" data-act="fclose">'+T("close")+'<\/button><\/div><p class="msg" role="status"><\/p><\/form>';
+ $("ip-form").showModal();
+}
+function infoForm(p){
+ $("ip-form-c").innerHTML='<h3>'+T("inq")+'<\/h3><p class="note" style="margin:8px 0 22px">'+esc(T("code")+p.id+" — "+tr(p.title))+'<\/p><form data-kind="info" data-ref="'+esc(p.id)+'" data-title="'+esc(tr(p.title))+'">'+hp()+fld("name",T("fName"),"text",1)+fld("email",T("fEmail"),"email",1)+fld("phone",T("fPhone"),"tel",0)+'<label class="f" style="margin-bottom:14px"><span>'+T("fNotes")+'<\/span><textarea name="notes" rows="3"><\/textarea><\/label>'+chk("consent",T("consent")+priv())+'<div class="actions"><button class="btn" type="submit">'+T("send")+'<\/button><button class="btn alt" type="button" data-act="fclose">'+T("close")+'<\/button><\/div><p class="msg" role="status"><\/p><\/form>';
+ $("ip-form").showModal();
+}
+function valForm(){
+ $("v-form").innerHTML='<form data-kind="valuation">'+hp()+'<div class="fg">'+fld("name",T("fName"),"text",1)+fld("email",T("fEmail"),"email",1)+fld("phone",T("fPhone"),"tel",0)+sel("intent",T("fIntent"),INTENTS,0)+sel("ptype",T("fType"),catRows(),1)+fld("location",T("fLoc"),"text",1)+sel("time",T("fTime"),TIMES,0)+fld("area",T("fArea"),"number",0,' min="0"')+fld("land",T("fLand"),"number",0,' min="0"')+'<\/div><label class="f" style="margin-bottom:14px"><span>'+T("fNotes")+'<\/span><textarea name="notes" rows="3"><\/textarea><\/label>'+chk("consent",T("consent")+priv())+'<button class="btn" type="submit">'+T("send")+'<\/button><p class="msg" role="status"><\/p><\/form>';
+}
+function submitForm(f){
+ var fd=new FormData(f),o={},k;
+ fd.forEach(function(v,key){o[key]=v});
+ if(o.website)return;
+ delete o.website;
+ o.type=f.dataset.kind;
+ if(f.dataset.kind==="shortlist")o.property_ids=f.dataset.ref;else if(f.dataset.ref){o.property=f.dataset.ref+" — "+f.dataset.title}
+ o.language=L;o.units=U;o.market=CONFIG.market;o.page=location.href.split("#")[0];o.referrer=document.referrer||"";o.submitted_at=new Date().toISOString();
+ try{var qs=new URLSearchParams(location.search);["utm_source","utm_medium","utm_campaign"].forEach(function(u){if(qs.get(u))o[u]=qs.get(u)})}catch(e){}
+ if(CLIENT)o.client_ref=CLIENT;
+ var m=f.querySelector(".msg"),nda=(f.dataset.kind==="access"&&CONFIG.ndaUrl)?' <a href="'+esc(CONFIG.ndaUrl)+'" target="_blank" rel="noopener" style="color:var(--gold-d)">'+esc(T("ndaNext"))+'<\/a>':'';
+ if(CONFIG.endpoint){
+  fetch(CONFIG.endpoint,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(o)})
+   .then(function(r){if(!r.ok)throw 0;m.innerHTML=esc(T("sent"))+nda;f.reset();track("generate_lead",{type:f.dataset.kind})})
+   .catch(function(){m.textContent=T("errSend")+CONFIG.email})
+ }else{
+  var lines=[];for(k in o)if(o[k]!==""&&k!=="consent"&&k!=="page"&&k!=="referrer"&&k!=="submitted_at")lines.push(k+": "+o[k]);
+  var subj=(f.dataset.kind==="valuation"?"Confidential appraisal request":f.dataset.kind==="access"?"Off-market access request":f.dataset.kind==="shortlist"?"Shortlist request":"Property enquiry")+(o.property?" — "+o.property:"");
+  window.location.href="mailto:"+CONFIG.email+"?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(lines.join("\n"));
+  m.innerHTML=esc(T("sentMail"))+nda;track("generate_lead",{type:f.dataset.kind});
+ }
+}
+function shortForm(){
+ var items=SL.map(byId).filter(Boolean),ids=items.map(function(p){return p.id}).join(",");
+ $("ip-short").close();
+ $("ip-form-c").innerHTML='<h3>'+T("emailList")+'<\/h3><p class="note" style="margin:8px 0 22px">'+esc(ids)+'<\/p><form data-kind="shortlist" data-ref="'+esc(ids)+'" data-title="">'+hp()+fld("name",T("fName"),"text",1)+fld("email",T("fEmail"),"email",1)+fld("phone",T("fPhone"),"tel",0)+'<label class="f" style="margin-bottom:14px"><span>'+T("fNotes")+'<\/span><textarea name="notes" rows="3"><\/textarea><\/label>'+chk("consent",T("consent")+priv())+'<div class="actions"><button class="btn" type="submit">'+T("send")+'<\/button><button class="btn alt" type="button" data-act="fclose">'+T("close")+'<\/button><\/div><p class="msg" role="status"><\/p><\/form>';
+ $("ip-form").showModal();
+}
+
+/* ---- Shortlist / Compare ---- */
+function shortDlg(){
+ var items=SL.map(byId).filter(Boolean);
+ var h='<div id="ip-print"><p class="eyebrow">INVéSTIA Properties<\/p><h3>'+T("cmpH")+'<\/h3><p class="note noprint" style="margin:8px 0 0">'+T("saveNote")+'<\/p><label class="f noprint" style="margin:14px 0 0;max-width:340px"><span>'+T("clientName")+'<\/span><input type="text" id="ip-client" maxlength="60" value="'+esc(CLIENT)+'"><\/label>';
+ if(!items.length)h+='<p class="empty">'+T("emptyList")+'<\/p>';
+ else{
+  var rows=[[T("code"),function(p){return esc(p.id)}],[L==="el"?"Κατηγορία":(L==="de"?"Kategorie":"Category"),function(p){return esc(lab(CATEGORIES,p.cat))}],[T("region"),function(p){return esc(locLine(p))}],[T("deal"),function(p){return esc(dealTxt(p))}],[T("price"),function(p){return esc(priceText(p))}],[T("ppa"),function(p){return esc(saleMetrics(p).join(" / ")||"—")}],[T("bld"),function(p){return areaStr(p.area)}],[T("lnd"),function(p){return landStr(p.land)}],[T("rooms"),function(p){return num(p.rooms)}],[T("st"),function(p){return esc(lab(STATUSES,p.status)+(p.offmarket?" · "+T("om"):""))}],[T("setting"),function(p){return esc(p.setting?lab(SETTINGS,p.setting):"—")}],[T("seaRel"),function(p){return esc(p.sea?lab(SEAS,p.sea):"—")}],[T("style"),function(p){return esc((p.styles||[]).map(function(f){return lab(STYLES,f)}).join(", ")||"—")}],[T("gv"),function(p){return esc(p.gv&&gvOn()?lab(GV,p.gv):"—")}],[T("airL"),function(p){return p.airportMin!=null?"~"+p.airportMin+" "+T("minU"):"—"}],[T("landUseL"),function(p){return esc(lbls(LANDUSE,p.landUse)||"—")}],[T("olivesL"),function(p){return esc(p.olives?lab(OLIVES,p.olives)+(p.olivesCount!=null?" ("+num(p.olivesCount)+")":""):"—")}],[T("feat"),function(p){return esc((p.features||[]).map(function(f){return lab(FEATURES,f)}).join(", ")||"—")}]];
+  h+='<div class="cmp"><table><thead><tr><th><\/th>'+items.map(function(p){return '<th style="text-transform:none;letter-spacing:0;font-size:1rem;color:var(--ink);font-weight:600">'+esc(tr(p.title))+'<br><button class="btn alt sm noprint" style="margin-top:8px" data-s="'+esc(p.id)+'" data-keep="2">'+T("remove")+'<\/button><\/th>'}).join("")+'<\/tr><\/thead><tbody>'+rows.map(function(r){return '<tr><th>'+r[0]+'<\/th>'+items.map(function(p){return '<td>'+r[1](p)+'<\/td>'}).join("")+'<\/tr>'}).join("")+'<\/tbody><\/table><\/div>';
+ }
+ h+='<\/div><div class="actions">'+(items.length?'<button class="btn" data-act="pdflist">'+T("pdfList")+'<\/button><button class="btn alt" data-act="link">'+T("copyLink")+'<\/button><button class="btn alt" data-act="mail">'+T("emailList")+'<\/button>':'')+'<button class="btn alt" data-act="sclose">'+T("close")+'<\/button><\/div><p class="msg linkmsg noprint" role="status"><\/p>';
+ $("ip-short-c").innerHTML=h;
+ if(!$("ip-short").open)$("ip-short").showModal();
+}
+function mailList(){
+ var items=SL.map(byId).filter(Boolean);
+ var body=items.map(function(p){return p.id+" — "+tr(p.title)}).join("\n");
+ window.location.href="mailto:"+CONFIG.email+"?subject="+encodeURIComponent(T("shortlist"))+"&body="+encodeURIComponent(body);
+}
+
+function copyLink(){
+ var u=(CONFIG.pageUrl||location.href.split("#")[0])+"#inv-list="+SL.join(",")+(CLIENT?"&c="+encodeURIComponent(CLIENT):"");
+ function done(){var n=$("ip-short-c").querySelector(".linkmsg");if(n)n.textContent=T("linkCopied")}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(done,function(){window.prompt("",u)});else window.prompt("",u);
+}
+
+/* ---- Simulator ---- */
+function sim(){
+ var P=+$("s-price").value,A=+$("s-acq").value,R=+$("s-rev").value,O=+$("s-opex").value;
+ var ok=$("s-price").value!==""&&$("s-acq").value!==""&&$("s-rev").value!==""&&$("s-opex").value!==""&&P>0;
+ if(!ok){$("s-out").innerHTML='<p class="note" style="grid-column:1/-1;margin:0">'+T("simFill")+'<\/p>';return}
+ var tot=P*(1+A/100),noi=R*(1-O/100),pct=function(x){return (x*100).toLocaleString(loc(),{maximumFractionDigits:2})+"%"};
+ $("s-out").innerHTML='<div><small>'+T("totalInv")+'<\/small><b>'+eur(Math.round(tot))+'<\/b><\/div><div><small>'+T("noi")+'<\/small><b>'+eur(Math.round(noi))+'<\/b><\/div><div><small>'+T("grossY")+'<\/small><b>'+pct(R/P)+'<\/b><\/div><div><small>'+T("netY")+'<\/small><b>'+pct(noi/tot)+'<\/b><\/div><div><small>'+T("payback")+'<\/small><b>'+(noi>0?(tot/noi).toLocaleString(loc(),{maximumFractionDigits:1})+T("years"):"—")+'<\/b><\/div>';
+}
+
+/* ---- Events ---- */
+var root=$("inv-props");
+root.addEventListener("click",function(e){
+ var t=e.target,b;
+ if((b=t.closest(".lang button"))){if(b.dataset.u){U=b.dataset.u;try{localStorage.setItem("inv-units",U)}catch(e){}}else L=b.dataset.l;build();return}
+ if((b=t.closest("button.tab"))){S.cat=b.dataset.c;$("ip-landf").hidden=!showLand();tabs();grid();return}
+ if(t.id==="ip-more"){advOpen=!advOpen;$("ip-adv").hidden=!advOpen;t.setAttribute("aria-expanded",advOpen);t.textContent=moreLabel();return}
+ if((b=t.closest("button.open"))){modal(b.dataset.id);return}
+ if((b=t.closest("[data-v]"))){var pv=byId(b.dataset.pid),av=pv&&(pv.videos||[]).filter(function(u){return vEmbed(u)}),ev=av&&vEmbed(av[+b.dataset.v]);if(ev){$("ip-mimg").classList.remove("noimg");$("ip-mimg").innerHTML=ev.t==="f"?'<iframe src="'+esc(ev.s)+'" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" title="Video"><\/iframe>':'<video src="'+esc(ev.s)+'" controls playsinline preload="metadata"><\/video>'}return}
+ if((b=t.closest("[data-th]"))){$("ip-mimg").innerHTML="";var pp=byId(b.dataset.pid),u=pp&&imgs(pp)[+b.dataset.th];if(u)$("ip-mimg").style.backgroundImage="url('"+u.replace(/'/g,"%27")+"')";return}
+ if((b=t.closest("[data-s]"))){toggle(b.dataset.s);if(b.dataset.keep==="1")modal(b.dataset.s);if(b.dataset.keep==="2")shortDlg();return}
+ if(t.id==="ip-shortbtn"){shortDlg();return}
+ if(t.id==="ip-reset"){fresh();build();return}
+ if((b=t.closest("[data-act]"))){
+  var a=b.dataset.act,p=b.dataset.id&&byId(b.dataset.id);
+  if(a==="close")$("ip-modal").close();
+  else if(a==="access"&&p){$("ip-modal").close();accessForm(p)}
+  else if(a==="info"&&p){$("ip-modal").close();infoForm(p)}
+  else if(a==="sim"&&p){$("ip-modal").close();$("s-price").value=p.price;sim();$("ip-sim").scrollIntoView({behavior:"smooth"})}
+  else if(a==="fclose")$("ip-form").close();
+  else if(a==="sclose")$("ip-short").close();
+  else if(a==="print")window.print();
+  else if(a==="mail")shortForm();
+  else if(a==="link")copyLink();
+  else if(a==="wa")track("whatsapp_click",{id:b.dataset.id});
+  else if(a==="pdflist")printPortfolio();
+  else if(a==="kml"&&p){track("download_kml",{id:p.id});dlKml(p)}
+  else if(a==="pdf"&&p)printPres(p);
+  return;
+ }
+ if(t===$("ip-modal"))$("ip-modal").close();
+ if(t===$("ip-form"))$("ip-form").close();
+ if(t===$("ip-short"))$("ip-short").close();
+});
+root.addEventListener("submit",function(e){e.preventDefault();submitForm(e.target)});
+root.addEventListener("change",function(e){
+ var t=e.target;
+ if(t.dataset.f){S.feats[t.dataset.f]=t.checked;$("ip-more").textContent=moreLabel()}
+ else if(t.dataset.st){S.styles[t.dataset.st]=t.checked;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-setting"){S.setting=t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-sea"){S.sea=t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.dataset.air){S.air30=t.checked;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-gv"){S.gv=t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.dataset.lu){S.landUse[t.dataset.lu]=t.checked;$("ip-more").textContent=moreLabel()}
+ else if(t.dataset.va){S.variety[t.dataset.va]=t.checked;$("ip-more").textContent=moreLabel()}
+ else if(t.dataset.ut){S.util[t.dataset.ut]=t.checked;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-olives"){S.olives=t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-zoning"){S.zoning=t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-access"){S.access=t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-topo"){S.topo=t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-region")S.region=t.value;
+ else if(t.id==="ip-deal")S.deal=t.value;
+ else if(t.id==="ip-status")S.status=t.value;
+ else if(t.id==="ip-pmin"){S.pmin=+t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-pmax"){S.pmax=+t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-rooms"){S.rooms=+t.value;$("ip-more").textContent=moreLabel()}
+ else if(t.id==="ip-sort")S.sort=t.value;
+ else return;
+ grid();
+});
+root.addEventListener("input",function(e){
+ var id=e.target.id;
+ if(id==="ip-q"){S.q=e.target.value.trim().toLowerCase();grid()}
+ else if(id==="ip-amin"){S.amin=(+e.target.value||0)/(isUS()?SQFT:1);grid();$("ip-more").textContent=moreLabel()}
+ else if(id==="ip-landmin"){S.landMin=(+e.target.value||0)*(isUS()?ACRE:1);grid();$("ip-more").textContent=moreLabel()}
+ else if(id==="ip-client"){CLIENT=e.target.value.slice(0,60)}
+ else if(id&&id.indexOf("s-")===0)sim();
+});
+(function(){var h=location.hash||"",m=/inv-list=([A-Za-z0-9_,\-]+)/.exec(h);if(m){m[1].split(",").forEach(function(id){if(byId(id)&&SL.indexOf(id)<0)SL.push(id)});persist()}var c=/[#&?]c=([^&]*)/.exec(h);if(c){try{CLIENT=decodeURIComponent(c[1]).replace(/[<>"'&]/g,"").slice(0,60)}catch(e){}}})();
+build();
+if(/inv-list=/.test(location.hash||"")&&SL.length)shortDlg();
+})();
+</script>
